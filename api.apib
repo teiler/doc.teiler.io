@@ -5,9 +5,46 @@ HOST: http://api.teiler.io
 
 tylr is a tool to split expenses in groups
 
+Throughout this document, you'll find error responses defined on a per-resource basis. Their description is based on the following schema:
+
+* Textual description
+  * Applicable operations (POST, GET, PUT, DELETE)
+  * HTTP Status Code
+  * The JSON response that is delivered, consisting of a constant error code you may check against.
+
+The enumeration values for ``currency`` are currently:
+* ``CHF``
+* ``EUR``
+
 ## Groups [/group]
 
 A tool is a collection of people and their expenses and compensations.
+
+The following errors may happen at the applicable operations:
+* Group ID is not found
+  * POST (Login)
+  * HTTP 404
+  * JSON: ``"error-code": "GROUP_ID_NOT_FOUND"``
+* The group needs an access code and the one given is wrong or missing
+  * POST (Login)
+  * HTTP 403
+  * JSON: ``"error-code": "GROUP_ID_NOT_FOUND"``
+* The person IDs given do not belong to the group
+  * PUT
+  * HTTP 406
+  * JSON: ``"error-code": "PERSON_ID_NOT_IN_GROUP"``
+* The person names clash in this group
+  * PUT
+  * HTTP 409
+  * JSON: ``"error-code": "PEOPLE_NAME_CONFLICT"``
+* The currency does not fit to the enum values
+  * PUT
+  * HTTP 416
+  * JSON: ``"error-code": "CURRENCY_NOT_VALID"``
+* The access code is too short or too long
+  * PUT
+  * HTTP 411
+  * JSON: ``"error-code": "ACCESS_CODE_WRONG_LENGTH"``
 
 ### Create a new group [POST]
 
@@ -15,19 +52,18 @@ A tool is a collection of people and their expenses and compensations.
 
         {
             "name": "Group name", 
-            "access-code": (integer, optional) "Access code",
         }
 
-+ Response 200 (application/json)
++ Response 200
 
         {
-            "group-uuid": (string) "Group UUID"
+            "group-uuid": "Group UUID",
         }
-    
+
 
 ### View a group [GET]
 
-+ Response 200 (application/json)
++ Response 200
 
         {
             "name": "Group name",
@@ -38,7 +74,7 @@ A tool is a collection of people and their expenses and compensations.
                     "name": "Person Name"
                 }, ...
             ],
-            "currency": (enum[currency]) "Default currency"
+            "currency": (enum[currency]) "Default currency",
         }
 
 ### Edit a group [PUT]
@@ -47,78 +83,98 @@ A tool is a collection of people and their expenses and compensations.
         
         {
             "name": "Group name",
-            "access-code": (integer, optional) "Access code"
+            "access-code": (integer, optional) "Access code",
             "people": [
                 {
                     "id": (integer) "Person ID",
                     "name": "Person Name"
-                } ...
-            ]
+                }, ...
+            ],
             "currency": (enum[currency]) "Default currency"
         }
         
-+ Response 200 (application/json)
++ Response 200
 
 ### Delete a group [DELETE]
 
++ Response 200
+
+### Log into a group [POST /group/login]
+
++ Request (application/json)
+        
+        {
+            "group-uuid": "Group UUID",
+            "access-code": (integer, optional) "Access code",
+        }
+        
 + Response 200
 
 ## Expense [/expense]
 
 An expense is something one person bought and is shared with other people. The payer can decide who profits from that and can even set how much each one profits.
 
+The following errors may happen at the applicable operations:
+* Factors dont add up to 1
+  * POST, PUT
+  * HTTP 406
+  * JSON: ``"error-code": "FACTORS_DONT_ADD_UP"``
+* Transaction ID, Payer ID or Profiteer ID is not found
+  * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
+  * HTTP 404
+  * JSON
+    * ``"error-code": "TRANSACTION_NOT_FOUND"``
+    * ``"error-code": "PAYER_ID_NOT_FOUND"``
+    * ``"error-code": "PROFITEER_ID_NOT_FOUND"``
+* Transaction ID, Payer ID or Profiteer ID do not belong to current group
+  * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
+  * HTTP 403
+  * JSON
+    * ``"error-code": "TRANSACTION_NOT_IN_GROUP"``
+    * ``"error-code": "PAYER_ID_NOT_IN_GROUP"``
+    * ``"error-code": "PROFITEER_ID_NOT_IN_GROUP"``
+
+
 ### Create an expense [POST]
 
 + Request (application/json)
 
         {
-            "title": "Title"
-            "amount": (integer) "Amount in Rappen/Cents"
-            "payer": (integer) "ID of the payer"
+            "title": "Title",
+            "amount": (integer) "Amount in Rappen/Cents",
+            "payer": (integer) "ID of the payer",
             "profiteers": [
                 {
                     "id": (integer) "Profiteer ID",
                     "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
                 }, ...
-            ]
+            ],
         }
         
-+ Response 200 (application/json)
++ Response 200
 
         {
             "expense-id": "Expense ID"
         }
-
-+ Response 400 (application/json)
-
-        {
-            "error-text": "Error Text"
-        }
         
 ### View an expense [GET /expense/{expenseid}]
 
-+ Response 200 (application/json)
++ Response 200
         
         {
-            "title": "Title"
-            "amount": (integer) "Amount in Rappen/Cents"
-            "payer": (integer) "ID of the payer"
-            "payer-name": "Name of the payer"
+            "title": "Title",
+            "amount": (integer) "Amount in Rappen/Cents",
+            "payer": (integer) "ID of the payer",
+            "payer-name": "Name of the payer",
             "profiteers": [
                 {
                     "id": (integer) "Profiteer ID",
                     "name": "Profiteer Name"
                     "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
                 }, ...
-            ]
-            "create-time": (datetime) "Create time"
+            ],
+            "create-time": (datetime) "Create time",
             "update-time": (datetime) "Update Time"
-        }
-
-+ Response 400 (application/json)
-        
-        {
-            "expense-id": "Expense ID"
         }
         
 ### Edit an expense [PUT /expense/{expenseid}]
@@ -126,81 +182,75 @@ An expense is something one person bought and is shared with other people. The p
 + Request (application/json)
 
         {
-            "title": "Title"
-            "amount": (integer) "Amount in Rappen/Cents"
-            "payer": (integer) "ID of the payer"
+            "title": "Title",
+            "amount": (integer) "Amount in Rappen/Cents",
+            "payer": (integer) "ID of the payer",
             "profiteers": [
                 {
                     "id": (integer) "Profiteer ID",
                     "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
                 }, ...
-            ]
+            ],
         }
         
-+ Response 200 (application/json)
++ Response 200
 
-+ Response 400 (application/json)
-
-        {
-            "error-text": "Error Text"
-        }
-        
 ### Delete an expense [DELETE /expense/{expenseid}]
         
-+ Response 200 (application/json)
++ Response 200
 
-+ Response 400 (application/json)
-
-        {
-            "error-text": "Error Text"
-        }
         
 ## Compensation [/compensation]
 
 A compensation is a payment that is recorded in tylr. It basically follows the Expense model, except there's just one profiteer.
+
+The following errors may happen at the applicable operations:
+* Transaction ID, Payer ID or Profiteer ID is not found
+  * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
+  * HTTP 404
+  * JSON
+    * ``"error-code": "TRANSACTION_NOT_FOUND"``
+    * ``"error-code": "PAYER_ID_NOT_FOUND"``
+    * ``"error-code": "PROFITEER_ID_NOT_FOUND"``
+* Transaction ID, Payer ID or Profiteer ID do not belong to current group
+  * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
+  * HTTP 403
+  * JSON
+    * ``"error-code": "TRANSACTION_NOT_IN_GROUP"``
+    * ``"error-code": "PAYER_ID_NOT_IN_GROUP"``
+    * ``"error-code": "PROFITEER_ID_NOT_IN_GROUP"``
 
 ### Create a compensation [POST]
 
 + Request (application/json)
 
         {
-            "title": "Title"
-            "amount": (integer) "Amount in Rappen/Cents"
-            "payer": (integer) "ID of the payer"
-            "profiteer": (integer) "ID of the profiteer"
+            "title": "Title",
+            "amount": (integer) "Amount in Rappen/Cents",
+            "payer": (integer) "ID of the payer",
+            "profiteer": (integer) "ID of the profiteer",
         }
         
-+ Response 200 (application/json)
++ Response 200
 
         {
-            "expense-id": "Compensation ID"
+            "compensation-id": "Compensation ID"
         }
 
-+ Response 400 (application/json)
-
-        {
-            "error-text": "Error Text"
-        }
         
 ### View a compensation [GET /compensation/{compensationid}]
 
-+ Response 200 (application/json)
++ Response 200
         
         {
-            "title": "Title"
-            "amount": (integer) "Amount in Rappen/Cents"
-            "payer": (integer) "ID of the payer"
-            "payer-name": "Name of the payer"
-            "profiteer": (integer) "ID of the profiteer"
-            "profiteer-name:" "Name of the profiteer"
-            "create-time": (datetime) "Create time"
-            "update-time": (datetime) "Update Time"
-        }
-
-+ Response 400 (application/json)
-        
-        {
-            "compensation-id": "Compensation ID"
+            "title": "Title",
+            "amount": (integer) "Amount in Rappen/Cents",
+            "payer": (integer) "ID of the payer",
+            "payer-name": "Name of the payer",
+            "profiteer": (integer) "ID of the profiteer",
+            "profiteer-name:" "Name of the profiteer",
+            "create-time": (datetime) "Create time",
+            "update-time": (datetime) "Update Time",
         }
         
 ### Edit a compensation [PUT /compensation/{compensationid}]
@@ -208,29 +258,17 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 + Request (application/json)
 
         {
-            "title": "Title"
-            "amount": (integer) "Amount in Rappen/Cents"
-            "payer": (integer) "ID of the payer"
-            "profiteer": (integer) "ID of the profiteer"
+            "title": "Title",
+            "amount": (integer) "Amount in Rappen/Cents",
+            "payer": (integer) "ID of the payer",
+            "profiteer": (integer) "ID of the profiteer",
         }
         
-+ Response 200 (application/json)
-
-+ Response 400 (application/json)
-
-        {
-            "error-text": "Error Text"
-        }
++ Response 200
         
 ### Delete an expense [DELETE /expense/{expenseid}]
         
-+ Response 200 (application/json)
-
-+ Response 400 (application/json)
-
-        {
-            "error-text": "Error Text"
-        }
++ Response 200
         
 ## Debt [/debt]
 
@@ -241,13 +279,13 @@ Shows the debt to the group with the concept of a balance.
 
 ### View Debts [GET]
 
-+ Response 200 (application/json)
++ Response 200
 
         [
             {
-                "id": (integer) "ID of the person"
-                "name": "Name of the person"
-                "balance": (integer) "Balance of the person in Rappen/Cents"
+                "id": (integer) "ID of the person",
+                "name": "Name of the person",
+                "balance": (integer) "Balance of the person in Rappen/Cents",
             }, ...
         ]
         
@@ -257,14 +295,14 @@ Shows suggested compensations between group members.
 
 ### View Settle Up [GET]
 
-+ Response 200 (application/json)
++ Response 200
 
         [
             {
-                "from-id": (integer) "ID of the person who has to pay"
-                "from-name": "Name of the person who has to pay"
-                "to-id": (integer) "ID of the person who gets money"
-                "to-name": "Name of the person who gets money"
-                "amount": (integer) "Amount in Rappen/Cents"
+                "from-id": (integer) "ID of the person who has to pay",
+                "from-name": "Name of the person who has to pay",
+                "to-id": (integer) "ID of the person who gets money",
+                "to-name": "Name of the person who gets money",
+                "amount": (integer) "Amount in Rappen/Cents",
             }, ...
         ]
