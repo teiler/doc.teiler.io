@@ -1,0 +1,16 @@
+dist: trusty
+
+language: node_js
+node_js:
+  - 'node'
+
+before_script: npm install -g aglio && mkdir dist
+
+script: aglio --theme-variables streak --theme-template triple  -i api.apib -o dist/index.html
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  on:
+    branch: master
