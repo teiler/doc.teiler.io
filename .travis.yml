@@ -4,7 +4,7 @@ language: node_js
 node_js:
   - 'node'
 
-before_script: npm install -g aglio && mkdir dist
+before_script: npm install -g aglio && mkdir dist && echo 'doc.teiler.io' > dist/CNAME
 
 script: aglio --theme-variables streak --theme-template triple  -i api.apib -o dist/index.html
 
