@@ -1,0 +1,263 @@
+FORMAT: 1A
+HOST: http://api.teiler.io
+
+# tylr
+
+tylr is bla
+
+## Groups [/group]
+
+### Create a new group [POST]
+
++ Request (application/json)
+
+        {
+            "name": "Group name", 
+            "access-code": (integer, optional) "Access code",
+        }
+
++ Response 200 (application/json)
+
+        {
+            "group-uuid": (string) "Group UUID"
+        }
+    
+
+### View a group [GET]
+
++ Response 200 (application/json)
+
+        {
+            "name": "Group name",
+            "access-code": (integer, optional) "Access code"
+            "people": [
+                {
+                    "id": (integer) "Person ID",
+                    "name": "Person Name"
+                }, ...
+            ],
+            "currency": (enum[currency]) "Default currency"
+        }
+
+### Edit a group [PUT]
+
++ Request (application/json)
+        
+        {
+            "name": "Group name",
+            "access-code": (integer, optional) "Access code"
+            "people": [
+                {
+                    "id": (integer) "Person ID",
+                    "name": "Person Name"
+                } ...
+            ]
+            "currency": (enum[currency]) "Default currency"
+        }
+        
++ Response 200 (application/json)
+
+### Delete a group [DELETE]
+
++ Response 200
+
+## Expense [/expense]
+
+### Create an expense [POST]
+
++ Request (application/json)
+
+        {
+            "title": "Title"
+            "amount": (integer) "Amount in Rappen/Cents"
+            "payer": (integer) "ID of the payer"
+            "profiteers": [
+                {
+                    "id": (integer) "Profiteer ID",
+                    "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                }, ...
+            ]
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "expense-id": "Expense ID"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "error-text": "Error Text"
+        }
+        
+### View an expense [GET /expense/{expenseid}]
+
++ Response 200 (application/json)
+        
+        {
+            "title": "Title"
+            "amount": (integer) "Amount in Rappen/Cents"
+            "payer": (integer) "ID of the payer"
+            "payer-name": "Name of the payer"
+            "profiteers": [
+                {
+                    "id": (integer) "Profiteer ID",
+                    "name": "Profiteer Name"
+                    "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                }, ...
+            ]
+            "create-time": (datetime) "Create time"
+            "update-time": (datetime) "Update Time"
+        }
+
++ Response 400 (application/json)
+        
+        {
+            "expense-id": "Expense ID"
+        }
+        
+### Edit an expense [PUT /expense/{expenseid}]
+
++ Request (application/json)
+
+        {
+            "title": "Title"
+            "amount": (integer) "Amount in Rappen/Cents"
+            "payer": (integer) "ID of the payer"
+            "profiteers": [
+                {
+                    "id": (integer) "Profiteer ID",
+                    "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                }, ...
+            ]
+        }
+        
++ Response 200 (application/json)
+
++ Response 400 (application/json)
+
+        {
+            "error-text": "Error Text"
+        }
+        
+### Delete an expense [DELETE /expense/{expenseid}]
+        
++ Response 200 (application/json)
+
++ Response 400 (application/json)
+
+        {
+            "error-text": "Error Text"
+        }
+        
+## Compensation [/compensation]
+
+### Create a compensation [POST]
+
++ Request (application/json)
+
+        {
+            "title": "Title"
+            "amount": (integer) "Amount in Rappen/Cents"
+            "payer": (integer) "ID of the payer"
+            "profiteer": (integer) "ID of the profiteer"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "expense-id": "Compensation ID"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "error-text": "Error Text"
+        }
+        
+### View a compensation [GET /compensation/{compensationid}]
+
++ Response 200 (application/json)
+        
+        {
+            "title": "Title"
+            "amount": (integer) "Amount in Rappen/Cents"
+            "payer": (integer) "ID of the payer"
+            "payer-name": "Name of the payer"
+            "profiteer": (integer) "ID of the profiteer"
+            "profiteer-name:" "Name of the profiteer"
+            "create-time": (datetime) "Create time"
+            "update-time": (datetime) "Update Time"
+        }
+
++ Response 400 (application/json)
+        
+        {
+            "compensation-id": "Compensation ID"
+        }
+        
+### Edit a compensation [PUT /compensation/{compensationid}]
+
++ Request (application/json)
+
+        {
+            "title": "Title"
+            "amount": (integer) "Amount in Rappen/Cents"
+            "payer": (integer) "ID of the payer"
+            "profiteer": (integer) "ID of the profiteer"
+        }
+        
++ Response 200 (application/json)
+
++ Response 400 (application/json)
+
+        {
+            "error-text": "Error Text"
+        }
+        
+### Delete an expense [DELETE /expense/{expenseid}]
+        
++ Response 200 (application/json)
+
++ Response 400 (application/json)
+
+        {
+            "error-text": "Error Text"
+        }
+        
+## Debt [/debt]
+
+Shows the debt to the group with the concept of a balance.
+A positive value means, the person has a credit on the group (the group owes this person)
+A negative value means, the person has a debt on the group (he/she owes the group)
+
+### View Debts [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": (integer) "ID of the person"
+                "name": "Name of the person"
+                "balance": (integer) "Balance of the person in Rappen/Cents"
+            }, ...
+        ]
+        
+## Settle up [/settleup]
+
+Shows suggested compensations between group members.
+
+### View Settle Up [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "from-id": (integer) "ID of the person who has to pay"
+                "from-name": "Name of the person who has to pay"
+                "to-id": (integer) "ID of the person who gets money"
+                "to-name": "Name of the person who gets money"
+                "amount": (integer) "Amount in Rappen/Cents"
+            }, ...
+        ]
