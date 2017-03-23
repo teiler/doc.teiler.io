@@ -27,7 +27,7 @@ The enumeration values for ``currency`` are currently:
 * ``CHF``
 * ``EUR``
 
-## Groups [/group]
+# Groups [/group]
 
 A tool is a collection of people and their expenses and compensations.
 
@@ -58,7 +58,7 @@ The following errors may happen at the applicable operations:
   * HTTP 411
   * JSON: ``"error-code": "ACCESS_CODE_WRONG_LENGTH"``
 
-### Create a new group [POST]
+## Create a new group [POST]
 
 + Request (application/json)
 
@@ -73,9 +73,10 @@ The following errors may happen at the applicable operations:
         }
 
 
-### View a group [GET]
+## View a group [GET]
 
 + Response 200
+
 
         {
             "name": "Group name",
@@ -89,7 +90,7 @@ The following errors may happen at the applicable operations:
             "currency": (enum[currency]) "Default currency",
         }
 
-### Edit a group [PUT]
+## Edit a group [PUT]
 
 + Request (application/json)
         
@@ -107,11 +108,11 @@ The following errors may happen at the applicable operations:
         
 + Response 200
 
-### Delete a group [DELETE]
+## Delete a group [DELETE]
 
 + Response 200
 
-### Log into a group [POST /group/login]
+## Log into a group [POST /group/login]
 
 + Request (application/json)
         
@@ -122,7 +123,7 @@ The following errors may happen at the applicable operations:
         
 + Response 200
 
-## Expense [/expense]
+# Expense [/expense]
 
 An expense is something one person bought and is shared with other people. The payer can decide who profits from that and can even set how much each one profits.
 
@@ -148,7 +149,7 @@ The following errors may happen at the applicable operations:
     * ``"error-code": "PROFITEER_NOT_IN_GROUP"``
 
 
-### Create an expense [POST]
+## Create an expense [POST]
 
 + Request (application/json)
 
@@ -170,7 +171,7 @@ The following errors may happen at the applicable operations:
             "expense-id": "Expense ID"
         }
         
-### View an expense [GET /expense/{expenseid}]
+## View an expense [GET /expense/{expenseid}]
 
 + Parameters
     + expenseid (integer) - ID of the expense
@@ -193,7 +194,7 @@ The following errors may happen at the applicable operations:
             "update-time": (datetime) "Update Time"
         }
         
-### Edit an expense [PUT /expense/{expenseid}]
+## Edit an expense [PUT /expense/{expenseid}]
 
 + Parameters
     + expenseid (integer) - ID of the expense
@@ -214,7 +215,7 @@ The following errors may happen at the applicable operations:
         
 + Response 200
 
-### Delete an expense [DELETE /expense/{expenseid}]
+## Delete an expense [DELETE /expense/{expenseid}]
 
 + Parameters
     + expenseid (integer) - ID of the expense
@@ -222,7 +223,7 @@ The following errors may happen at the applicable operations:
 + Response 200
 
         
-## Compensation [/compensation]
+# Compensation [/compensation]
 
 A compensation is a payment that is recorded in tylr. It basically follows the Expense model, except there's just one profiteer.
 
@@ -243,7 +244,7 @@ The following errors may happen at the applicable operations:
     * ``"error-code": "PAYER_NOT_IN_GROUP"``
     * ``"error-code": "PROFITEER_NOT_IN_GROUP"``
 
-### Create a compensation [POST]
+## Create a compensation [POST]
 
 + Request (application/json)
 
@@ -261,7 +262,7 @@ The following errors may happen at the applicable operations:
         }
 
         
-### View a compensation [GET /compensation/{compensationid}]
+## View a compensation [GET /compensation/{compensationid}]
 
 + Parameters
     + compensationid (integer) - ID of the compensation
@@ -279,7 +280,7 @@ The following errors may happen at the applicable operations:
             "update-time": (datetime) "Update Time",
         }
         
-### Edit a compensation [PUT /compensation/{compensationid}]
+## Edit a compensation [PUT /compensation/{compensationid}]
 
 + Parameters
     + compensationid (integer) - ID of the compensation
@@ -295,12 +296,14 @@ The following errors may happen at the applicable operations:
         
 + Response 200
         
-### Delete a compensation [DELETE /compensation/{compensationid}]
+## Delete a compensation [DELETE /compensation/{compensationid}]
 
 + Parameters
     + compensationid (integer) - ID of the compensation
         
 + Response 200
+
+# Group Debt
         
 ## Debt [/debt]
 
@@ -310,10 +313,10 @@ Shows the debt to the group with the concept of a balance.
 * A negative value means, the person has a debt on the group (he/she owes the group)
 
 ### View Debts [GET]
-
 + Response 200
 
         [
+
             {
                 "id": (integer) "ID of the person",
                 "name": "Name of the person",
