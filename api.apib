@@ -12,6 +12,17 @@ Throughout this document, you'll find error responses defined on a per-resource 
   * HTTP Status Code
   * The JSON response that is delivered, consisting of a constant error code you may check against.
 
+On all requests, the following errors may happen:
+
+* Not authorized to a group
+  * All operations (except "Create a new group" and "Log into a group"
+  * HTTP 401
+  * JSON: ``"error-code": "NOT_AUTHORIZED_TO_GROUP"``
+* Server error
+  * All operations
+  * HTTP 500
+  * JSON: ``"error-code": "GENERAL_SERVER_ERROR"``
+
 The enumeration values for ``currency`` are currently:
 * ``CHF``
 * ``EUR``
@@ -21,10 +32,11 @@ The enumeration values for ``currency`` are currently:
 A tool is a collection of people and their expenses and compensations.
 
 The following errors may happen at the applicable operations:
+
 * Group ID is not found
   * POST (Login)
   * HTTP 404
-  * JSON: ``"error-code": "GROUP_ID_NOT_FOUND"``
+  * JSON: ``"error-code": "GROUP_NOT_FOUND"``
 * The group needs an access code and the one given is wrong or missing
   * POST (Login)
   * HTTP 403
@@ -32,7 +44,7 @@ The following errors may happen at the applicable operations:
 * The person IDs given do not belong to the group
   * PUT
   * HTTP 406
-  * JSON: ``"error-code": "PERSON_ID_NOT_IN_GROUP"``
+  * JSON: ``"error-code": "PERSON_NOT_IN_GROUP"``
 * The person names clash in this group
   * PUT
   * HTTP 409
@@ -115,6 +127,7 @@ The following errors may happen at the applicable operations:
 An expense is something one person bought and is shared with other people. The payer can decide who profits from that and can even set how much each one profits.
 
 The following errors may happen at the applicable operations:
+
 * Factors dont add up to 1
   * POST, PUT
   * HTTP 406
@@ -124,15 +137,15 @@ The following errors may happen at the applicable operations:
   * HTTP 404
   * JSON
     * ``"error-code": "TRANSACTION_NOT_FOUND"``
-    * ``"error-code": "PAYER_ID_NOT_FOUND"``
-    * ``"error-code": "PROFITEER_ID_NOT_FOUND"``
+    * ``"error-code": "PAYER_NOT_FOUND"``
+    * ``"error-code": "PROFITEER_NOT_FOUND"``
 * Transaction ID, Payer ID or Profiteer ID do not belong to current group
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 403
   * JSON
     * ``"error-code": "TRANSACTION_NOT_IN_GROUP"``
-    * ``"error-code": "PAYER_ID_NOT_IN_GROUP"``
-    * ``"error-code": "PROFITEER_ID_NOT_IN_GROUP"``
+    * ``"error-code": "PAYER_NOT_IN_GROUP"``
+    * ``"error-code": "PROFITEER_NOT_IN_GROUP"``
 
 
 ### Create an expense [POST]
@@ -159,6 +172,9 @@ The following errors may happen at the applicable operations:
         
 ### View an expense [GET /expense/{expenseid}]
 
++ Parameters
+    + expenseid (integer) - ID of the expense
+
 + Response 200
         
         {
@@ -179,6 +195,9 @@ The following errors may happen at the applicable operations:
         
 ### Edit an expense [PUT /expense/{expenseid}]
 
++ Parameters
+    + expenseid (integer) - ID of the expense
+
 + Request (application/json)
 
         {
@@ -196,6 +215,9 @@ The following errors may happen at the applicable operations:
 + Response 200
 
 ### Delete an expense [DELETE /expense/{expenseid}]
+
++ Parameters
+    + expenseid (integer) - ID of the expense
         
 + Response 200
 
@@ -205,20 +227,21 @@ The following errors may happen at the applicable operations:
 A compensation is a payment that is recorded in tylr. It basically follows the Expense model, except there's just one profiteer.
 
 The following errors may happen at the applicable operations:
+
 * Transaction ID, Payer ID or Profiteer ID is not found
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 404
   * JSON
     * ``"error-code": "TRANSACTION_NOT_FOUND"``
-    * ``"error-code": "PAYER_ID_NOT_FOUND"``
-    * ``"error-code": "PROFITEER_ID_NOT_FOUND"``
+    * ``"error-code": "PAYER_NOT_FOUND"``
+    * ``"error-code": "PROFITEER_NOT_FOUND"``
 * Transaction ID, Payer ID or Profiteer ID do not belong to current group
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 403
   * JSON
     * ``"error-code": "TRANSACTION_NOT_IN_GROUP"``
-    * ``"error-code": "PAYER_ID_NOT_IN_GROUP"``
-    * ``"error-code": "PROFITEER_ID_NOT_IN_GROUP"``
+    * ``"error-code": "PAYER_NOT_IN_GROUP"``
+    * ``"error-code": "PROFITEER_NOT_IN_GROUP"``
 
 ### Create a compensation [POST]
 
@@ -240,6 +263,9 @@ The following errors may happen at the applicable operations:
         
 ### View a compensation [GET /compensation/{compensationid}]
 
++ Parameters
+    + compensationid (integer) - ID of the compensation
+
 + Response 200
         
         {
@@ -255,6 +281,9 @@ The following errors may happen at the applicable operations:
         
 ### Edit a compensation [PUT /compensation/{compensationid}]
 
++ Parameters
+    + compensationid (integer) - ID of the compensation
+
 + Request (application/json)
 
         {
@@ -266,7 +295,10 @@ The following errors may happen at the applicable operations:
         
 + Response 200
         
-### Delete an expense [DELETE /expense/{expenseid}]
+### Delete a compensation [DELETE /compensation/{compensationid}]
+
++ Parameters
+    + compensationid (integer) - ID of the compensation
         
 + Response 200
         
