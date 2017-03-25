@@ -326,7 +326,7 @@ Shows the debt to the group with the concept of a balance.
         
 ## Settle up [/settleup]
 
-Shows suggested compensations between group members.
+Shows suggested compensations between group members. They're formatted as multiple compensations, so you could re-use them when the user wants to quickly settle up.
 
 ### View Settle Up [GET]
 
@@ -334,10 +334,11 @@ Shows suggested compensations between group members.
 
         [
             {
-                "from-id": (integer) "ID of the person who has to pay",
-                "from-name": "Name of the person who has to pay",
-                "to-id": (integer) "ID of the person who gets money",
-                "to-name": "Name of the person who gets money",
+                "title": "Title",
                 "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteer": (integer) "ID of the profiteer",
+                "profiteer-name:" "Name of the profiteer",
             }, ...
         ]
