@@ -138,35 +138,23 @@ The following errors may happen at the applicable operations:
 
 + Request (application/json)
 
-    + Attributes
-        + title: Title (string, required) - title of the request
-        + amount: 100 (number, required) - amount in cents
-        + payer: 1 (number, required) - payer id
-        + profiteers
-            + id: 1 (number, required) - profiteer id
-            + factor: 0.5 (number, required) - percentage between 0 and 1.0 of the whole amount
-
-    + Schema
-    
-            {}
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + id: 312 (number) - expense id
+        {
+            "title": "Title",
+            "amount": (integer) "Amount in Rappen/Cents",
+            "payer": (integer) "ID of the payer",
+            "profiteers": [
+                {
+                    "id": (integer) "Profiteer ID",
+                    "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                }, ...
+            ],
+        }
         
-    + Schema
-    
-            {}
-        
-+ Response 404 (application/json)
++ Response 200
 
-    + Attributes
-        + id: 312 (number) - expense id
-        
-    + Schema
-    
-            {}
+        {
+            "expense-id": "Expense ID"
+        }
         
 ## View an expense [GET /expense/{expenseid}]
 
