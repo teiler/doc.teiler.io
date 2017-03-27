@@ -1,9 +1,15 @@
 FORMAT: 1A
+<<<<<<< HEAD
 HOST: https://api.teiler.io/v1
+=======
+HOST: http://api.teiler.io/v1
+>>>>>>> 4765502feb78e5c06579a52e2b3d822504b5441d
 
 # tylr
 
 tylr is a tool to split expenses in groups
+
+Most operations expect a group ID to work with. You are expected to deliver the group ID in the custom header ``X-Teiler-GroupID``. To obtain a group ID, check "Create a new group".
 
 Throughout this document, you'll find error responses defined on a per-resource basis. Their description is based on the following schema:
 
@@ -14,14 +20,14 @@ Throughout this document, you'll find error responses defined on a per-resource 
 
 On all requests, the following errors may happen:
 
-* Not authorized to a group
-  * All operations (except "Create a new group" and "Log into a group"
+* Not authorized to a group. This indicates a missing or wrong ``X-Teiler-GroupID`` header.
+  * All operations (except "Create a new group")
   * HTTP 401
-  * JSON: ``"error-code": "NOT_AUTHORIZED_TO_GROUP"``
+  * JSON: ``"error": "NOT_AUTHORIZED_TO_GROUP"``
 * Server error
   * All operations
   * HTTP 500
-  * JSON: ``"error-code": "GENERAL_SERVER_ERROR"``
+  * JSON: ``"error": "GENERAL_SERVER_ERROR"``
 
 The enumeration values for ``currency`` are currently:
 * ``CHF``
@@ -35,30 +41,18 @@ A tool is a collection of people and their expenses and compensations.
 
 The following errors may happen at the applicable operations:
 
-* Group ID is not found
-  * POST (Login)
-  * HTTP 404
-  * JSON: ``"error-code": "GROUP_NOT_FOUND"``
-* The group needs an access code and the one given is wrong or missing
-  * POST (Login)
-  * HTTP 403
-  * JSON: ``"error-code": "ACCESS_CODE_WRONG"``
 * The person IDs given do not belong to the group
   * PUT
   * HTTP 406
-  * JSON: ``"error-code": "PERSON_NOT_IN_GROUP"``
+  * JSON: ``"error": "PERSON_NOT_IN_GROUP"``
 * The person names clash in this group
   * PUT
   * HTTP 409
-  * JSON: ``"error-code": "PEOPLE_NAME_CONFLICT"``
+  * JSON: ``"error": "PEOPLE_NAME_CONFLICT"``
 * The currency does not fit to the enum values
   * PUT
   * HTTP 416
-  * JSON: ``"error-code": "CURRENCY_NOT_VALID"``
-* The access code is too short or too long
-  * PUT
-  * HTTP 411
-  * JSON: ``"error-code": "ACCESS_CODE_WRONG_LENGTH"``
+  * JSON: ``"error": "CURRENCY_NOT_VALID"``
 
 ## Create a new group [POST]
 
@@ -72,6 +66,7 @@ The following errors may happen at the applicable operations:
 
         {
             "group-uuid": "Group UUID",
+            "name": "Group name",
         }
 
 
@@ -82,7 +77,6 @@ The following errors may happen at the applicable operations:
 
         {
             "name": "Group name",
-            "access-code": (integer, optional) "Access code"
             "people": [
                 {
                     "id": (integer) "Person ID",
@@ -103,7 +97,6 @@ The backend implements the following behavior concerning people's IDs and names:
         
         {
             "name": "Group name",
-            "access-code": (integer, optional) "Access code",
             "people": [
                 {
                     "id": (integer) "Person ID",
@@ -119,17 +112,6 @@ The backend implements the following behavior concerning people's IDs and names:
 
 + Response 200
 
-## Log into a group [POST /group/login]
-
-+ Request (application/json)
-        
-        {
-            "group-uuid": "Group UUID",
-            "access-code": (integer, optional) "Access code",
-        }
-        
-+ Response 200
-
 # Expense [/expense]
 
 An expense is something one person bought and is shared with other people. The payer can decide who profits from that and can even set how much each one profits.
@@ -139,21 +121,25 @@ The following errors may happen at the applicable operations:
 * Factors dont add up to 1
   * POST, PUT
   * HTTP 406
+<<<<<<< HEAD
   * JSON: ``"error-code": "FACTORS_ERROR"``
+=======
+  * JSON: ``"error": "FACTORS_DONT_ADD_UP"``
+>>>>>>> 4765502feb78e5c06579a52e2b3d822504b5441d
 * Transaction ID, Payer ID or Profiteer ID is not found
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 404
   * JSON
-    * ``"error-code": "TRANSACTION_NOT_FOUND"``
-    * ``"error-code": "PAYER_NOT_FOUND"``
-    * ``"error-code": "PROFITEER_NOT_FOUND"``
+    * ``"error": "TRANSACTION_NOT_FOUND"``
+    * ``"error": "PAYER_NOT_FOUND"``
+    * ``"error": "PROFITEER_NOT_FOUND"``
 * Transaction ID, Payer ID or Profiteer ID do not belong to current group
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 403
   * JSON
-    * ``"error-code": "TRANSACTION_NOT_IN_GROUP"``
-    * ``"error-code": "PAYER_NOT_IN_GROUP"``
-    * ``"error-code": "PROFITEER_NOT_IN_GROUP"``
+    * ``"error": "TRANSACTION_NOT_IN_GROUP"``
+    * ``"error": "PAYER_NOT_IN_GROUP"``
+    * ``"error": "PROFITEER_NOT_IN_GROUP"``
 
 
 ## Create an expense [POST]
@@ -252,16 +238,16 @@ The following errors may happen at the applicable operations:
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 404
   * JSON
-    * ``"error-code": "TRANSACTION_NOT_FOUND"``
-    * ``"error-code": "PAYER_NOT_FOUND"``
-    * ``"error-code": "PROFITEER_NOT_FOUND"``
+    * ``"error": "TRANSACTION_NOT_FOUND"``
+    * ``"error": "PAYER_NOT_FOUND"``
+    * ``"error": "PROFITEER_NOT_FOUND"``
 * Transaction ID, Payer ID or Profiteer ID do not belong to current group
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 403
   * JSON
-    * ``"error-code": "TRANSACTION_NOT_IN_GROUP"``
-    * ``"error-code": "PAYER_NOT_IN_GROUP"``
-    * ``"error-code": "PROFITEER_NOT_IN_GROUP"``
+    * ``"error": "TRANSACTION_NOT_IN_GROUP"``
+    * ``"error": "PAYER_NOT_IN_GROUP"``
+    * ``"error": "PROFITEER_NOT_IN_GROUP"``
 
 ## Create a compensation [POST]
 
