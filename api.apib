@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://api.teiler.io/v1/
+HOST: https://api.teiler.io/v1
 
 # tylr
 
@@ -139,7 +139,7 @@ The following errors may happen at the applicable operations:
 * Factors dont add up to 1
   * POST, PUT
   * HTTP 406
-  * JSON: ``"error-code": "FACTORS_DONT_ADD_UP"``
+  * JSON: ``"error-code": "FACTORS_ERROR"``
 * Transaction ID, Payer ID or Profiteer ID is not found
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 404
@@ -160,23 +160,35 @@ The following errors may happen at the applicable operations:
 
 + Request (application/json)
 
-        {
-            "title": "Title",
-            "amount": (integer) "Amount in Rappen/Cents",
-            "payer": (integer) "ID of the payer",
-            "profiteers": [
-                {
-                    "id": (integer) "Profiteer ID",
-                    "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
-                }, ...
-            ],
-        }
-        
-+ Response 200
+    + Attributes
+        + title: Title (string, required) - title of the request
+        + amount: 100 (number, required) - amount in cents
+        + payer: 1 (number, required) - payer id
+        + profiteers
+            + id: 1 (number, required) - profiteer id
+            + factor: 0.5 (number, required) - percentage between 0 and 1.0 of the whole amount
 
-        {
-            "expense-id": "Expense ID"
-        }
+    + Schema
+    
+            {}
+
++ Response 200 (application/json)
+
+    + Attributes
+        + id: 312 (number) - expense id
+        
+    + Schema
+    
+            {}
+        
++ Response 404 (application/json)
+
+    + Attributes
+        + id: 312 (number) - expense id
+        
+    + Schema
+    
+            {}
         
 ## View an expense [GET /expense/{expenseid}]
 
