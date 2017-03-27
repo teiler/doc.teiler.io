@@ -27,7 +27,7 @@ The enumeration values for ``currency`` are currently:
 * ``CHF``
 * ``EUR``
 
-All time values follow the ISO time format standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+All time values follow the ISO time format standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
 
 # Groups [/group]
 
@@ -93,6 +93,11 @@ The following errors may happen at the applicable operations:
         }
 
 ## Edit a group [PUT]
+
+The backend implements the following behavior concerning people's IDs and names:
+
+* If an ID is given and it belongs to the group already, the name of the person gets changed
+* If the ID is not given, a new person gets created and associated with the group.
 
 + Request (application/json)
         
