@@ -19,11 +19,11 @@ On all requests, the following errors may happen:
 * Not authorized to a group. This indicates a missing or wrong ``X-Teiler-GroupID`` header.
   * All operations (except "Create a new group")
   * HTTP 401
-  * JSON: ``"error-code": "NOT_AUTHORIZED_TO_GROUP"``
+  * JSON: ``"error": "NOT_AUTHORIZED_TO_GROUP"``
 * Server error
   * All operations
   * HTTP 500
-  * JSON: ``"error-code": "GENERAL_SERVER_ERROR"``
+  * JSON: ``"error": "GENERAL_SERVER_ERROR"``
 
 The enumeration values for ``currency`` are currently:
 * ``CHF``
@@ -40,15 +40,15 @@ The following errors may happen at the applicable operations:
 * The person IDs given do not belong to the group
   * PUT
   * HTTP 406
-  * JSON: ``"error-code": "PERSON_NOT_IN_GROUP"``
+  * JSON: ``"error": "PERSON_NOT_IN_GROUP"``
 * The person names clash in this group
   * PUT
   * HTTP 409
-  * JSON: ``"error-code": "PEOPLE_NAME_CONFLICT"``
+  * JSON: ``"error": "PEOPLE_NAME_CONFLICT"``
 * The currency does not fit to the enum values
   * PUT
   * HTTP 416
-  * JSON: ``"error-code": "CURRENCY_NOT_VALID"``
+  * JSON: ``"error": "CURRENCY_NOT_VALID"``
 
 ## Create a new group [POST]
 
@@ -117,21 +117,21 @@ The following errors may happen at the applicable operations:
 * Factors dont add up to 1
   * POST, PUT
   * HTTP 406
-  * JSON: ``"error-code": "FACTORS_DONT_ADD_UP"``
+  * JSON: ``"error": "FACTORS_DONT_ADD_UP"``
 * Transaction ID, Payer ID or Profiteer ID is not found
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 404
   * JSON
-    * ``"error-code": "TRANSACTION_NOT_FOUND"``
-    * ``"error-code": "PAYER_NOT_FOUND"``
-    * ``"error-code": "PROFITEER_NOT_FOUND"``
+    * ``"error": "TRANSACTION_NOT_FOUND"``
+    * ``"error": "PAYER_NOT_FOUND"``
+    * ``"error": "PROFITEER_NOT_FOUND"``
 * Transaction ID, Payer ID or Profiteer ID do not belong to current group
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 403
   * JSON
-    * ``"error-code": "TRANSACTION_NOT_IN_GROUP"``
-    * ``"error-code": "PAYER_NOT_IN_GROUP"``
-    * ``"error-code": "PROFITEER_NOT_IN_GROUP"``
+    * ``"error": "TRANSACTION_NOT_IN_GROUP"``
+    * ``"error": "PAYER_NOT_IN_GROUP"``
+    * ``"error": "PROFITEER_NOT_IN_GROUP"``
 
 
 ## Create an expense [POST]
@@ -218,16 +218,16 @@ The following errors may happen at the applicable operations:
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 404
   * JSON
-    * ``"error-code": "TRANSACTION_NOT_FOUND"``
-    * ``"error-code": "PAYER_NOT_FOUND"``
-    * ``"error-code": "PROFITEER_NOT_FOUND"``
+    * ``"error": "TRANSACTION_NOT_FOUND"``
+    * ``"error": "PAYER_NOT_FOUND"``
+    * ``"error": "PROFITEER_NOT_FOUND"``
 * Transaction ID, Payer ID or Profiteer ID do not belong to current group
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 403
   * JSON
-    * ``"error-code": "TRANSACTION_NOT_IN_GROUP"``
-    * ``"error-code": "PAYER_NOT_IN_GROUP"``
-    * ``"error-code": "PROFITEER_NOT_IN_GROUP"``
+    * ``"error": "TRANSACTION_NOT_IN_GROUP"``
+    * ``"error": "PAYER_NOT_IN_GROUP"``
+    * ``"error": "PROFITEER_NOT_IN_GROUP"``
 
 ## Create a compensation [POST]
 
