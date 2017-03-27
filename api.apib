@@ -1,9 +1,5 @@
 FORMAT: 1A
-<<<<<<< HEAD
 HOST: https://api.teiler.io/v1
-=======
-HOST: http://api.teiler.io/v1
->>>>>>> 4765502feb78e5c06579a52e2b3d822504b5441d
 
 # tylr
 
@@ -121,11 +117,7 @@ The following errors may happen at the applicable operations:
 * Factors dont add up to 1
   * POST, PUT
   * HTTP 406
-<<<<<<< HEAD
-  * JSON: ``"error-code": "FACTORS_ERROR"``
-=======
   * JSON: ``"error": "FACTORS_DONT_ADD_UP"``
->>>>>>> 4765502feb78e5c06579a52e2b3d822504b5441d
 * Transaction ID, Payer ID or Profiteer ID is not found
   * POST (Payer ID, Profiteer ID), GET (Transaction ID), PUT (all)
   * HTTP 404
