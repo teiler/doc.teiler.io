@@ -5,6 +5,8 @@ HOST: http://api.teiler.io/v1
 
 tylr is a tool to split expenses in groups
 
+Most operations expect a group ID to work with. You are expected to deliver the group ID in the custom header ``X-Teiler-GroupID``. To obtain a group ID, check "Create a new group".
+
 Throughout this document, you'll find error responses defined on a per-resource basis. Their description is based on the following schema:
 
 * Textual description
@@ -14,8 +16,8 @@ Throughout this document, you'll find error responses defined on a per-resource 
 
 On all requests, the following errors may happen:
 
-* Not authorized to a group
-  * All operations (except "Create a new group" and "Log into a group"
+* Not authorized to a group. This indicates a missing or wrong ``X-Teiler-GroupID`` header.
+  * All operations (except "Create a new group")
   * HTTP 401
   * JSON: ``"error-code": "NOT_AUTHORIZED_TO_GROUP"``
 * Server error
@@ -35,14 +37,6 @@ A tool is a collection of people and their expenses and compensations.
 
 The following errors may happen at the applicable operations:
 
-* Group ID is not found
-  * POST (Login)
-  * HTTP 404
-  * JSON: ``"error-code": "GROUP_NOT_FOUND"``
-* The group needs an access code and the one given is wrong or missing
-  * POST (Login)
-  * HTTP 403
-  * JSON: ``"error-code": "ACCESS_CODE_WRONG"``
 * The person IDs given do not belong to the group
   * PUT
   * HTTP 406
@@ -55,10 +49,6 @@ The following errors may happen at the applicable operations:
   * PUT
   * HTTP 416
   * JSON: ``"error-code": "CURRENCY_NOT_VALID"``
-* The access code is too short or too long
-  * PUT
-  * HTTP 411
-  * JSON: ``"error-code": "ACCESS_CODE_WRONG_LENGTH"``
 
 ## Create a new group [POST]
 
@@ -83,7 +73,6 @@ The following errors may happen at the applicable operations:
 
         {
             "name": "Group name",
-            "access-code": (integer, optional) "Access code"
             "people": [
                 {
                     "id": (integer) "Person ID",
@@ -104,7 +93,6 @@ The backend implements the following behavior concerning people's IDs and names:
         
         {
             "name": "Group name",
-            "access-code": (integer, optional) "Access code",
             "people": [
                 {
                     "id": (integer) "Person ID",
@@ -118,17 +106,6 @@ The backend implements the following behavior concerning people's IDs and names:
 
 ## Delete a group [DELETE]
 
-+ Response 200
-
-## Log into a group [POST /group/login]
-
-+ Request (application/json)
-        
-        {
-            "group-uuid": "Group UUID",
-            "access-code": (integer, optional) "Access code",
-        }
-        
 + Response 200
 
 # Expense [/expense]
