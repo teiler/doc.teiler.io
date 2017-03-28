@@ -17,13 +17,9 @@ Throughout this document, you'll find error responses defined on a per-resource 
 On all requests, the following errors may happen:
 
 * Not authorized to a group. This indicates a missing or wrong ``X-Teiler-GroupID`` header.
-  * All operations (except "Create a new group")
-  * HTTP 401
-  * JSON: ``"error": "NOT_AUTHORIZED_TO_GROUP"``
 * Server error
   * All operations
   * HTTP 500
-  * JSON: ``"error": "GENERAL_SERVER_ERROR"``
 
 The arrayeration values for ``currency`` are currently:
 * ``CHF``
