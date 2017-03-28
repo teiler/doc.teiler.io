@@ -35,7 +35,7 @@ A group is a collection of people and their expenses and compensations.
 
 + Request (application/json)
 
-    + Schema
+    + Body
 
             {
                 "name": "Group name", 
@@ -43,7 +43,7 @@ A group is a collection of people and their expenses and compensations.
 
 + Response 200 (application/json)
 
-    + Schema
+    + Body
 
             {
                 "group-uuid": "Group UUID",
@@ -57,7 +57,18 @@ A group is a collection of people and their expenses and compensations.
     + Body
 
             {
-                "error": "PEOPLE_NAME_CONFLICT",
+                "error": [
+                    "PEOPLE_NAME_CONFLICT",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
             }
 
 + Response 416 (application/json)
@@ -67,7 +78,18 @@ A group is a collection of people and their expenses and compensations.
     + Body
 
             {
-                "error": "CURRENCY_NOT_VALID",
+                "error": [
+                    "CURRENCY_NOT_VALID",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
             }
 
 ## View a group [GET]
@@ -84,7 +106,7 @@ A group is a collection of people and their expenses and compensations.
                         "name": "Person Name"
                     }, ...
                 ],
-                "currency": (array[currency]) "Default currency",
+                "currency": (enum[currency]) "Default currency",
             }
 
 + Response 401 (application/json)
@@ -139,8 +161,19 @@ The backend implements the following behavior concerning people's IDs and names:
     + Body
 
             {
-                "error": "NOT_AUTHORIZED_TO_GROUP",
-            }       
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }    
 
 ## Delete a group [DELETE]
 
