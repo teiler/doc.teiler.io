@@ -6,7 +6,7 @@ node_js:
 
 before_script: npm install -g aglio && mkdir dist && echo 'doc.teiler.io' > dist/CNAME
 
-script: aglio --theme-variables streak --theme-template triple  -i api.apib -o dist/index.html
+script: aglio --theme-variables streak  -i api.apib -o dist/index.html
 
 deploy:
   provider: pages

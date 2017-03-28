@@ -1,1 +1,1 @@
-aglio --theme-variables streak --theme-template triple  -i api.apib -o index.html
+aglio --theme-variables streak -i api.apib -o index.html
