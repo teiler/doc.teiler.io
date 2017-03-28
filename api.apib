@@ -27,6 +27,7 @@ The arrayeration values for ``currency`` are currently:
 
 All time values follow the ISO time format standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
 
+
 # Groups [/groups]
 
 A group is a collection of people and their expenses and compensations.
@@ -204,9 +205,12 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             }
 
-# Expense [/groups/{id}/expenses]
+# Expense [/groups/{groupid}/expenses]
 
 An expense is something one person bought and is shared with other people. The payer can decide who profits from that and can even set how much each one profits.
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
 
 ## Create an expense [POST]
 
@@ -305,6 +309,7 @@ An expense is something one person bought and is shared with other people. The p
 ## Get last expenses [GET /groups/{groupid}/expenses{?limit}]
 
 + Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
     + limit: 20 (number, optional) - The maximum number of results to return.
         + Default: `20`
 
@@ -691,11 +696,14 @@ An expense is something one person bought and is shared with other people. The p
             }
 
         
-# Compensation [/compensations]
+# Compensation [/groups/{groupid}/compensations]
 
 A compensation is a payment that is recorded in tylr. It basically follows the Expense model, except there's just one profiteer.
 
-## Create a compensation [POST /groups/{groupid}/compensations]
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+
+## Create a compensation [POST]
 
 + Request (application/json)
 
@@ -776,6 +784,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 ## Get compensations [GET /groups/{groupid}/compensations{?limit}]
 
 + Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
     + limit: 20 (number, optional) - The maximum number of results to return.
         + Default: `2
 
@@ -1049,7 +1058,11 @@ Shows the debt to the group with the concept of a balance.
 * A positive value means, the person has a credit on the group (the group owes this person)
 * A negative value means, the person has a debt on the group (he/she owes the group)
 
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+
 ### Get Debts [GET]
+
 + Response 200
 
         [
@@ -1085,6 +1098,9 @@ Shows the debt to the group with the concept of a balance.
 ## Settle up [/groups/{groupid}/settleup]
 
 Shows suggested compensations between group members. They're formatted as multiple compensations, so you could re-use them when the user wants to quickly settle up.
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
 
 ### Get Settle Up [GET]
 
