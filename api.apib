@@ -87,6 +87,27 @@ A group is a collection of people and their expenses and compensations.
                 "currency": (array[currency]) "Default currency",
             }
 
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 ## Edit a group [PUT]
 
 The backend implements the following behavior concerning people's IDs and names:
