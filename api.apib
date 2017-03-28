@@ -92,7 +92,7 @@ A group is a collection of people and their expenses and compensations.
                 ]
             }
 
-## View a group [GET]
+## Get a group [GET]
 
 + Response 200
 
@@ -299,7 +299,7 @@ An expense is something one person bought and is shared with other people. The p
             }
         
 
-## View an expense [GET /expense/{expenseid}]
+## Get an expense [GET /expense/{expenseid}]
 
 + Parameters
     + expenseid: 2634 (integer) - ID of the expense
@@ -667,7 +667,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
 
         
-## View a compensation [GET /compensation/{compensationid}]
+## Get a compensation [GET /compensation/{compensationid}]
 
 + Parameters
     + compensationid: 852 (integer) - ID of the compensation
@@ -860,7 +860,7 @@ Shows the debt to the group with the concept of a balance.
 * A positive value means, the person has a credit on the group (the group owes this person)
 * A negative value means, the person has a debt on the group (he/she owes the group)
 
-### View Debts [GET]
+### Get Debts [GET]
 + Response 200
 
         [
@@ -897,7 +897,7 @@ Shows the debt to the group with the concept of a balance.
 
 Shows suggested compensations between group members. They're formatted as multiple compensations, so you could re-use them when the user wants to quickly settle up.
 
-### View Settle Up [GET]
+### Get Settle Up [GET]
 
 + Response 200
 
