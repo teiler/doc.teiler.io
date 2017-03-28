@@ -400,10 +400,10 @@ An expense is something one person bought and is shared with other people. The p
                 ]
             }     
 
-## Get an expense [GET /expenses/{expenseid}]
+## Get an expense [GET /expenses/{id}]
 
 + Parameters
-    + expenseid: 2634 (integer) - ID of the expense
+    + id: 2634 (integer) - ID of the expense
 
 + Response 200
 
@@ -502,10 +502,10 @@ An expense is something one person bought and is shared with other people. The p
             }
         
 
-## Edit an expense [PUT /expenses/{expenseid}]
+## Edit an expense [PUT /expenses/{id}]
 
 + Parameters
-    + expenseid: 2634 (integer) - ID of the expense
+    + id: 2634 (integer) - ID of the expense
 
 + Request (application/json)
 
@@ -600,10 +600,10 @@ An expense is something one person bought and is shared with other people. The p
         
 
 
-## Delete an expense [DELETE /expenses/{expenseid}]
+## Delete an expense [DELETE /expenses/{id}]
 
 + Parameters
-    + expenseid: 2634 (integer) - ID of the expense
+    + id: 2634 (integer) - ID of the expense
         
 + Response 200
 
@@ -704,7 +704,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
     + Schema
 
             {
-                "compensation-id": "Compensation ID"
+                "id": "Compensation ID"
             }
 
 + Response 401 (application/json)
@@ -846,10 +846,10 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 ]
             }
         
-## Get a compensation [GET /compensations/{compensationid}]
+## Get a compensation [GET /compensations/{id}]
 
 + Parameters
-    + compensationid: 852 (integer) - ID of the compensation
+    + id: 852 (integer) - ID of the compensation
 
 + Response 200 (application/json)
 
@@ -925,10 +925,10 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 ]
             }
  
-## Edit a compensation [PUT /compensations/{compensationid}]
+## Edit a compensation [PUT /compensations/{id}]
 
 + Parameters
-    + compensationid: 852 (integer) - ID of the compensation
+    + id: 852 (integer) - ID of the compensation
 
 + Request (application/json)
 
@@ -1002,10 +1002,10 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
 
         
-## Delete a compensation [DELETE /compensations/{compensationid}]
+## Delete a compensation [DELETE /compensations/{id}]
 
 + Parameters
-    + compensationid: 852 (integer) - ID of the compensation
+    + id: 852 (integer) - ID of the compensation
         
 + Response 200
 
