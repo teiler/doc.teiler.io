@@ -200,7 +200,7 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             }
 
-# Expense [/expense]
+# Expense [/expensea]
 
 An expense is something one person bought and is shared with other people. The payer can decide who profits from that and can even set how much each one profits.
 
@@ -297,9 +297,110 @@ An expense is something one person bought and is shared with other people. The p
                     ...
                 ]
             }
-        
 
-## Get an expense [GET /expense/{expenseid}]
+## Get last expenses [GET /expenses{?limit}]
+
++ Parameters
+    + limit: 20 (number, optional) - The maximum number of results to return.
+        + Default: `20`
+
++ Response 200
+
+    + Schema
+        
+            {
+                "title": "Title",
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteers": [
+                    {
+                        "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name"
+                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                    }, ...
+                ],
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time"
+            }
+        
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 403 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_IN_GROUP (string)
+            + PAYER_NOT_IN_GROUP (string)
+            + PROFITEER_NOT_IN_GROUP (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 404 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID is not found:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_FOUND (string)
+            + PAYER_NOT_FOUND (string)
+            + PROFITEER_NOT_FOUND (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 406 (application/json)
+
+    Factors dont add up to 1.
+
+    + Attributes (object)
+        + error (array)
+            + FACTORS_DONT_ADD_UP (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }     
+
+## Get an expense [GET /expenses/{expenseid}]
 
 + Parameters
     + expenseid: 2634 (integer) - ID of the expense
@@ -401,7 +502,7 @@ An expense is something one person bought and is shared with other people. The p
             }
         
 
-## Edit an expense [PUT /expense/{expenseid}]
+## Edit an expense [PUT /expenses/{expenseid}]
 
 + Parameters
     + expenseid: 2634 (integer) - ID of the expense
@@ -499,7 +600,7 @@ An expense is something one person bought and is shared with other people. The p
         
 
 
-## Delete an expense [DELETE /expense/{expenseid}]
+## Delete an expense [DELETE /expenses/{expenseid}]
 
 + Parameters
     + expenseid: 2634 (integer) - ID of the expense
@@ -583,7 +684,7 @@ An expense is something one person bought and is shared with other people. The p
             }
 
         
-# Compensation [/compensation]
+# Compensation [/compensations]
 
 A compensation is a payment that is recorded in tylr. It basically follows the Expense model, except there's just one profiteer.
 
@@ -665,9 +766,87 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 ]
             }
 
+## Get compensations [GET /compensations{?limit}]
 
++ Parameters
+    + limit: 20 (number, optional) - The maximum number of results to return.
+        + Default: `2
+
++ Response 200 (application/json)
+
+    + Schema
         
-## Get a compensation [GET /compensation/{compensationid}]
+            {
+                "title": "Title",
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteer": (integer) "ID of the profiteer",
+                "profiteer-name:" "Name of the profiteer",
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time",
+            }
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 403 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_IN_GROUP (string)
+            + PAYER_NOT_IN_GROUP (string)
+            + PROFITEER_NOT_IN_GROUP (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 404 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID is not found:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_FOUND (string)
+            + PAYER_NOT_FOUND (string)
+            + PROFITEER_NOT_FOUND (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+        
+## Get a compensation [GET /compensations/{compensationid}]
 
 + Parameters
     + compensationid: 852 (integer) - ID of the compensation
@@ -746,7 +925,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 ]
             }
  
-## Edit a compensation [PUT /compensation/{compensationid}]
+## Edit a compensation [PUT /compensations/{compensationid}]
 
 + Parameters
     + compensationid: 852 (integer) - ID of the compensation
@@ -823,7 +1002,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
 
         
-## Delete a compensation [DELETE /compensation/{compensationid}]
+## Delete a compensation [DELETE /compensations/{compensationid}]
 
 + Parameters
     + compensationid: 852 (integer) - ID of the compensation
