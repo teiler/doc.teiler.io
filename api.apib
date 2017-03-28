@@ -148,12 +148,6 @@ The backend implements the following behavior concerning people's IDs and names:
         
             {
                 "name": "Group name",
-                "people": [
-                    {
-                        "id": (integer) "Person ID",
-                        "name": "Person Name"
-                    }, ...
-                ],
                 "currency": (array[currency]) "Default currency"
             }
         
@@ -205,7 +199,7 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             }
 
-# Persons [/groups/{groupid}/persons]
+# People [/groups/{groupid}/people]
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
@@ -250,7 +244,7 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             }
 
-## Get persons [GET /groups/{groupid}/persons{?limit}]
+## Get People [GET /groups/{groupid}/people{?limit}]
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
@@ -270,7 +264,7 @@ The backend implements the following behavior concerning people's IDs and names:
 
 
 
-## Edit a person [PUT /groups/{groupid}/persons/{personid}]
+## Edit a person [PUT /groups/{groupid}/people/{personid}]
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
@@ -314,7 +308,7 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             } 
 
-## Delete a person [DELETE /groups/{groupid}/persons/{personid}]
+## Delete a person [DELETE /groups/{groupid}/people/{personid}]
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
