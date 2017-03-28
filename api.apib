@@ -205,6 +205,207 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             }
 
+# Persons [/groups/{groupid}/persons]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+
+## Create a new person [POST]
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Person name", 
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "Person ID",
+                "name": "Person name",
+            }  
+
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }   
+
++ Response 409 (application/json)
+
+    The person names clash in this group.
+
+    + Body
+
+            {
+                "error": [
+                    "PEOPLE_NAME_CONFLICT",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
+## Get persons [GET /groups/{groupid}/persons{?limit}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + limit: 20 (number, optional) - The maximum number of results to return.
+        + Default: `20`
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": "Person ID",
+                    "name": "Person name",
+                }, ...
+            ]  
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }   
+
+## Edit a person [PUT /groups/{groupid}/persons/{personid}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + personid: 4 (integer) - ID of the person
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Person name", 
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "Person ID",
+                "name": "Person name",
+            }  
+
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }   
+
++ Response 409 (application/json)
+
+    The person names clash in this group.
+
+    + Body
+
+            {
+                "error": [
+                    "PEOPLE_NAME_CONFLICT",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            } 
+
+## Delete a person [DELETE /groups/{groupid}/persons/{personid}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + personid: 4 (integer) - ID of the person
+
++ Response 200
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 # Expense [/groups/{groupid}/expenses]
 
 An expense is something one person bought and is shared with other people. The payer can decide who profits from that and can even set how much each one profits.
@@ -317,21 +518,23 @@ An expense is something one person bought and is shared with other people. The p
 
     + Schema
         
-            {
-                "title": "Title",
-                "amount": (integer) "Amount in Rappen/Cents",
-                "payer": (integer) "ID of the payer",
-                "payer-name": "Name of the payer",
-                "profiteers": [
-                    {
-                        "id": (integer) "Profiteer ID",
-                        "name": "Profiteer Name"
-                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
-                    }, ...
-                ],
-                "create-time": (datetime) "Create time",
-                "update-time": (datetime) "Update Time"
-            }
+            [
+                {
+                    "title": "Title",
+                    "amount": (integer) "Amount in Rappen/Cents",
+                    "payer": (integer) "ID of the payer",
+                    "payer-name": "Name of the payer",
+                    "profiteers": [
+                        {
+                            "id": (integer) "Profiteer ID",
+                            "name": "Profiteer Name"
+                            "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                        }, ...
+                    ],
+                    "create-time": (datetime) "Create time",
+                    "update-time": (datetime) "Update Time"
+                }, ...
+            ]
         
 + Response 401 (application/json)
 
@@ -792,16 +995,18 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
     + Schema
         
-            {
-                "title": "Title",
-                "amount": (integer) "Amount in Rappen/Cents",
-                "payer": (integer) "ID of the payer",
-                "payer-name": "Name of the payer",
-                "profiteer": (integer) "ID of the profiteer",
-                "profiteer-name:" "Name of the profiteer",
-                "create-time": (datetime) "Create time",
-                "update-time": (datetime) "Update Time",
-            }
+            [
+                {
+                    "title": "Title",
+                    "amount": (integer) "Amount in Rappen/Cents",
+                    "payer": (integer) "ID of the payer",
+                    "payer-name": "Name of the payer",
+                    "profiteer": (integer) "ID of the profiteer",
+                    "profiteer-name:" "Name of the profiteer",
+                    "create-time": (datetime) "Create time",
+                    "update-time": (datetime) "Update Time",
+                }, ...
+            ]
 
 + Response 401 (application/json)
 
