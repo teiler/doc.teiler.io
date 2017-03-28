@@ -154,6 +154,27 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             }
 
++ Response 411 (application/json)
+
+    There need to be at least two people in a group.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_ENOUGH_PEOPLE",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 + Response 416 (application/json)
 
     The currency does not fit to the array values.
