@@ -98,6 +98,7 @@ The backend implements the following behavior concerning people's IDs and names:
     + Schema
         
             {
+                "id": "Group ID",
                 "name": "Group name",
                 "people": [
                     {
@@ -363,6 +364,27 @@ An expense is something one person bought and is shared with other people. The p
                 ],
             }
 
++ Response 200
+
+    + Schema
+        
+            {
+                "id": "Expense ID",
+                "title": "Title",
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteers": [
+                    {
+                        "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name"
+                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                    }, ...
+                ],
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time"
+            }
+
 + Response 403 (application/json)
 
     Transaction ID, Payer ID or Profiteer ID do not belong to current group:
@@ -513,6 +535,7 @@ An expense is something one person bought and is shared with other people. The p
     + Schema
         
             {
+                "id": "Expense ID",
                 "title": "Title",
                 "amount": (integer) "Amount in Rappen/Cents",
                 "payer": (integer) "ID of the payer",
@@ -605,6 +628,25 @@ An expense is something one person bought and is shared with other people. The p
         }
         
 + Response 200
+
+    + Schema
+        
+            {
+                "id": "Expense ID",
+                "title": "Title",
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteers": [
+                    {
+                        "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name"
+                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                    }, ...
+                ],
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time"
+            }
 
 + Response 403 (application/json)
 
@@ -747,9 +789,16 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 + Response 200 (application/json)
 
     + Schema
-
+        
             {
-                "id": "Compensation ID"
+                "id": (integer),
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteer": (integer) "ID of the profiteer",
+                "profiteer-name:" "Name of the profiteer",
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time",
             }
 
 
@@ -804,6 +853,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
         
             [
                 {
+                    "id": (integer),
                     "amount": (integer) "Amount in Rappen/Cents",
                     "payer": (integer) "ID of the payer",
                     "payer-name": "Name of the payer",
@@ -856,13 +906,14 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
-    + compensationid: 852 (integer) - ID of the expense    + id: 852 (integer) - ID of the compensation
+    + compensationid: 852 (integer) - ID of the expense    
 
 + Response 200 (application/json)
 
     + Schema
         
             {
+                "id": (integer),
                 "amount": (integer) "Amount in Rappen/Cents",
                 "payer": (integer) "ID of the payer",
                 "payer-name": "Name of the payer",
@@ -924,7 +975,20 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
             "profiteer": (integer) "ID of the profiteer",
         }
         
-+ Response 200
++ Response 200 (application/json)
+
+    + Schema
+        
+            {
+                "id": (integer),
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteer": (integer) "ID of the profiteer",
+                "profiteer-name:" "Name of the profiteer",
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time",
+            }
 
 + Response 403 (application/json)
 
@@ -1014,7 +1078,6 @@ Shows suggested compensations between group members. They're formatted as multip
 
             [
                 {
-                    "title": "Title",
                     "amount": (integer) "Amount in Rappen/Cents",
                     "payer": (integer) "ID of the payer",
                     "payer-name": "Name of the payer",
