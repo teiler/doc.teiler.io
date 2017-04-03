@@ -39,6 +39,8 @@ A group is a collection of people and their expenses and compensations.
             {
                 "id": "Group ID",
                 "name": "Group name",
+                "update-time": "2012-04-23T18:25:43.511Z",
+                "create-time": "2010-04-32T12:21:13.495Z",
             }  
 
 ## Get a group [GET /groups/{id}]
@@ -106,7 +108,9 @@ The backend implements the following behavior concerning people's IDs and names:
                         "name": "Person Name"
                     }, ...
                 ],
-                "currency": (array[currency]) "Default currency"
+                "currency": (array[currency]) "Default currency",
+                "update-time": "2012-04-23T18:25:43.511Z",
+                "create-time": "2010-04-32T12:21:13.495Z",
             }
         
 + Response 200
@@ -244,6 +248,8 @@ The backend implements the following behavior concerning people's IDs and names:
             {
                 "id": "Person ID",
                 "name": "Person name",
+                "update-time": "2012-04-23T18:25:43.511Z",
+                "create-time": "2010-04-32T12:21:13.495Z",
             }
 
 + Response 409 (application/json)
@@ -282,6 +288,8 @@ The backend implements the following behavior concerning people's IDs and names:
                 {
                     "id": "Person ID",
                     "name": "Person name",
+                    "update-time": "2012-04-23T18:25:43.511Z",
+                    "create-time": "2010-04-32T12:21:13.495Z",
                 }, ...
             ]  
 
@@ -308,6 +316,8 @@ The backend implements the following behavior concerning people's IDs and names:
             {
                 "id": "Person ID",
                 "name": "Person name",
+                "update-time": "2012-04-23T18:25:43.511Z",
+                "create-time": "2010-04-32T12:21:13.495Z",
             }  
 
 + Response 409 (application/json)
@@ -989,7 +999,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
-
+            
 + Response 403 (application/json)
 
     Transaction ID, Payer ID or Profiteer ID do not belong to current group:
