@@ -5,8 +5,6 @@ HOST: https://api.teiler.io/v1
 
 tylr is a tool to split expenses in groups
 
-Most operations expect a group ID to work with. You are expected to deliver the group ID in the custom header ``X-Teiler-GroupID``. To obtain a group ID, check "Create a new group".
-
 Throughout this document, you'll find error responses defined on a per-resource basis. Their description is based on the following schema:
 
 * Textual description
@@ -19,7 +17,6 @@ The enumeration values for ``currency`` are currently:
 * ``eur``
 
 All time values follow the ISO time format standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
-
 
 # Groups [/groups]
 
@@ -800,8 +797,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
     + limit: 20 (number, optional) - The maximum number of results to return.
-        + Default: `2
-
+        + Default: `20`
 + Response 200 (application/json)
 
     + Schema
