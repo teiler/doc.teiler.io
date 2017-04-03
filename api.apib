@@ -54,6 +54,7 @@ A group is a collection of people and their expenses and compensations.
     + Schema
 
             {
+                "id": "Group ID",
                 "name": "Group name",
                 "people": [
                     {
@@ -991,14 +992,16 @@ Shows the debt to the group with the concept of a balance.
 
 + Response 200
 
-        [
+    + Schema
 
-            {
-                "id": (integer) "ID of the person",
-                "name": "Name of the person",
-                "balance": (integer) "Balance of the person in Rappen/Cents",
-            }, ...
-        ]
+            [
+
+                {
+                    "id": (integer) "ID of the person",
+                    "name": "Name of the person",
+                    "balance": (integer) "Balance of the person in Rappen/Cents",
+                }, ...
+            ]
 
 ## Settle up [/groups/{groupid}/settleup]
 
@@ -1011,14 +1014,16 @@ Shows suggested compensations between group members. They're formatted as multip
 
 + Response 200
 
-        [
-            {
-                "title": "Title",
-                "amount": (integer) "Amount in Rappen/Cents",
-                "payer": (integer) "ID of the payer",
-                "payer-name": "Name of the payer",
-                "profiteer": (integer) "ID of the profiteer",
-                "profiteer-name:" "Name of the profiteer",
-            }, ...
-        ]
+    + Schema
+
+            [
+                {
+                    "title": "Title",
+                    "amount": (integer) "Amount in Rappen/Cents",
+                    "payer": (integer) "ID of the payer",
+                    "payer-name": "Name of the payer",
+                    "profiteer": (integer) "ID of the profiteer",
+                    "profiteer-name:" "Name of the profiteer",
+                }, ...
+            ]
 
