@@ -5,8 +5,6 @@ HOST: https://api.teiler.io/v1
 
 tylr is a tool to split expenses in groups
 
-Most operations expect a group ID to work with. You are expected to deliver the group ID in the custom header ``X-Teiler-GroupID``. To obtain a group ID, check "Create a new group".
-
 Throughout this document, you'll find error responses defined on a per-resource basis. Their description is based on the following schema:
 
 * Textual description
@@ -14,20 +12,13 @@ Throughout this document, you'll find error responses defined on a per-resource 
   * HTTP Status Code
   * The JSON response that is delivered, consisting of a constant error code you may check against.
 
-On all requests, the following errors may happen:
-
-* Not authorized to a group. This indicates a missing or wrong ``X-Teiler-GroupID`` header.
-* Server error
-  * All operations
-  * HTTP 500
-
-The arrayeration values for ``currency`` are currently:
-* ``CHF``
-* ``EUR``
+The enumeration values for ``currency`` are currently:
+* ``chf``
+* ``eur``
 
 All time values follow the ISO time format standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
 
-# Groups [/group]
+# Groups [/groups]
 
 A group is a collection of people and their expenses and compensations.
 
@@ -46,17 +37,23 @@ A group is a collection of people and their expenses and compensations.
     + Body
 
             {
-                "group-uuid": "Group UUID",
+                "id": "Group ID",
                 "name": "Group name",
+                "update-time": "2012-04-23T18:25:43.511Z",
+                "create-time": "2010-04-32T12:21:13.495Z",
             }  
 
-## View a group [GET]
+## Get a group [GET /groups/{id}]
 
++ Parameters
+    + id: am5s9l5k9d43 (string) - ID of the group
+    
 + Response 200
 
     + Schema
 
             {
+                "id": "Group ID",
                 "name": "Group name",
                 "people": [
                     {
@@ -88,18 +85,22 @@ A group is a collection of people and their expenses and compensations.
                 ]
             }
 
-## Edit a group [PUT]
+## Edit a group [PUT /groups/{id}]
 
 The backend implements the following behavior concerning people's IDs and names:
 
 * If an ID is given and it belongs to the group already, the name of the person gets changed
 * If the ID is not given, a new person gets created and associated with the group.
 
++ Parameters
+    + id: am5s9l5k9d43 (string) - ID of the group
+
 + Request (application/json)
 
     + Schema
         
             {
+                "id": "Group ID",
                 "name": "Group name",
                 "people": [
                     {
@@ -107,7 +108,9 @@ The backend implements the following behavior concerning people's IDs and names:
                         "name": "Person Name"
                     }, ...
                 ],
-                "currency": (array[currency]) "Default currency"
+                "currency": (array[currency]) "Default currency",
+                "update-time": "2012-04-23T18:25:43.511Z",
+                "create-time": "2010-04-32T12:21:13.495Z",
             }
         
 + Response 200
@@ -169,10 +172,12 @@ The backend implements the following behavior concerning people's IDs and names:
     + Schema
 
             {
+            
                 "error": [ 
                     "ERROR_CODE",
                     ...
                 ]
+            
             }
 
 + Response 416 (application/json)
@@ -196,7 +201,7 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             }
 
-## Delete a group [DELETE]
+## Delete a group [DELETE  /groups/{id}]
 
 + Response 200
 
@@ -221,9 +226,135 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             }
 
-# Expense [/expense]
+# People [/groups/{groupid}/people]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+
+## Create a new person [POST]
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Person name", 
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "Person ID",
+                "name": "Person name",
+                "update-time": "2012-04-23T18:25:43.511Z",
+                "create-time": "2010-04-32T12:21:13.495Z",
+            }
+
++ Response 409 (application/json)
+
+    The person names clash in this group.
+
+    + Body
+
+            {
+                "error": [
+                    "PEOPLE_NAME_CONFLICT",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
+## Get People [GET /groups/{groupid}/people{?limit}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + limit: 20 (number, optional) - The maximum number of results to return.
+        + Default: `20`
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": "Person ID",
+                    "name": "Person name",
+                    "update-time": "2012-04-23T18:25:43.511Z",
+                    "create-time": "2010-04-32T12:21:13.495Z",
+                }, ...
+            ]  
+
+
+
+## Edit a person [PUT /groups/{groupid}/people/{personid}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + personid: 4 (integer) - ID of the person
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Person name", 
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "Person ID",
+                "name": "Person name",
+                "update-time": "2012-04-23T18:25:43.511Z",
+                "create-time": "2010-04-32T12:21:13.495Z",
+            }  
+
++ Response 409 (application/json)
+
+    The person names clash in this group.
+
+    + Body
+
+            {
+                "error": [
+                    "PEOPLE_NAME_CONFLICT",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            } 
+
+## Delete a person [DELETE /groups/{groupid}/people/{personid}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + personid: 4 (integer) - ID of the person
+
++ Response 200
+
+# Expense [/groups/{groupid}/expenses]
 
 An expense is something one person bought and is shared with other people. The payer can decide who profits from that and can even set how much each one profits.
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
 
 ## Create an expense [POST]
 
@@ -242,94 +373,13 @@ An expense is something one person bought and is shared with other people. The p
                     }, ...
                 ],
             }
-        
-+ Response 401 (application/json)
-
-    Error during authentication.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 403 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_IN_GROUP (string)
-            + PAYER_NOT_IN_GROUP (string)
-            + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 406 (application/json)
-
-    Factors dont add up to 1.
-
-    + Attributes (object)
-        + error (array)
-            + FACTORS_DONT_ADD_UP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-        
-
-## View an expense [GET /expense/{expenseid}]
-
-+ Parameters
-    + expenseid: 2634 (integer) - ID of the expense
 
 + Response 200
 
     + Schema
         
             {
+                "id": "Expense ID",
                 "title": "Title",
                 "amount": (integer) "Amount in Rappen/Cents",
                 "payer": (integer) "ID of the payer",
@@ -344,18 +394,16 @@ An expense is something one person bought and is shared with other people. The p
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time"
             }
-        
-+ Response 401 (application/json)
 
-    Error during authentication.
++ Response 403 (application/json)
 
-    + Body
+    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
 
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_IN_GROUP (string)
+            + PAYER_NOT_IN_GROUP (string)
+            + PROFITEER_NOT_IN_GROUP (string)
 
     + Schema
 
@@ -364,6 +412,153 @@ An expense is something one person bought and is shared with other people. The p
                     "ERROR_CODE",
                     ...
                 ]
+            }
+
++ Response 404 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID is not found:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_FOUND (string)
+            + PAYER_NOT_FOUND (string)
+            + PROFITEER_NOT_FOUND (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 406 (application/json)
+
+    Factors dont add up to 1.
+
+    + Attributes (object)
+        + error (array)
+            + FACTORS_DONT_ADD_UP (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
+## Get last expenses [GET /groups/{groupid}/expenses{?limit}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + limit: 20 (number, optional) - The maximum number of results to return.
+        + Default: `20`
+
++ Response 200
+
+    + Schema
+        
+            [
+                {
+                    "title": "Title",
+                    "amount": (integer) "Amount in Rappen/Cents",
+                    "payer": (integer) "ID of the payer",
+                    "payer-name": "Name of the payer",
+                    "profiteers": [
+                        {
+                            "id": (integer) "Profiteer ID",
+                            "name": "Profiteer Name"
+                            "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                        }, ...
+                    ],
+                    "create-time": (datetime) "Create time",
+                    "update-time": (datetime) "Update Time"
+                }, ...
+            ]
+
++ Response 403 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_IN_GROUP (string)
+            + PAYER_NOT_IN_GROUP (string)
+            + PROFITEER_NOT_IN_GROUP (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 404 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID is not found:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_FOUND (string)
+            + PAYER_NOT_FOUND (string)
+            + PROFITEER_NOT_FOUND (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 406 (application/json)
+
+    Factors dont add up to 1.
+
+    + Attributes (object)
+        + error (array)
+            + FACTORS_DONT_ADD_UP (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }     
+
+## Get an expense [GET /groups/{groupid}/expenses/{expenseid}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + expenseid: 2634 (integer) - ID of the expense
+
++ Response 200
+
+    + Schema
+        
+            {
+                "id": "Expense ID",
+                "title": "Title",
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteers": [
+                    {
+                        "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name"
+                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                    }, ...
+                ],
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time"
             }
 
 + Response 403 (application/json)
@@ -422,9 +617,10 @@ An expense is something one person bought and is shared with other people. The p
             }
         
 
-## Edit an expense [PUT /expense/{expenseid}]
+## Edit an expense [PUT /groups/{groupid}/expenses/{expenseid}]
 
 + Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
     + expenseid: 2634 (integer) - ID of the expense
 
 + Request (application/json)
@@ -442,25 +638,24 @@ An expense is something one person bought and is shared with other people. The p
         }
         
 + Response 200
-+ Response 401 (application/json)
-
-    Error during authentication.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
 
     + Schema
-
+        
             {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
+                "id": "Expense ID",
+                "title": "Title",
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteers": [
+                    {
+                        "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name"
+                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                    }, ...
+                ],
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time"
             }
 
 + Response 403 (application/json)
@@ -520,34 +715,14 @@ An expense is something one person bought and is shared with other people. The p
         
 
 
-## Delete an expense [DELETE /expense/{expenseid}]
+## Delete an expense [DELETE /groups/{groupid}/expenses/{expenseid}]
 
 + Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
     + expenseid: 2634 (integer) - ID of the expense
         
 + Response 200
 
-+ Response 401 (application/json)
-
-    Error during authentication.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
 + Response 403 (application/json)
 
     Transaction ID, Payer ID or Profiteer ID do not belong to current group:
@@ -604,16 +779,18 @@ An expense is something one person bought and is shared with other people. The p
             }
 
         
-# Compensation [/compensation]
+# Compensation [/groups/{groupid}/compensations]
 
 A compensation is a payment that is recorded in tylr. It basically follows the Expense model, except there's just one profiteer.
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
 
 ## Create a compensation [POST]
 
 + Request (application/json)
 
         {
-            "title": "Title",
             "amount": (integer) "Amount in Rappen/Cents",
             "payer": (integer) "ID of the payer",
             "profiteer": (integer) "ID of the profiteer",
@@ -622,83 +799,9 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 + Response 200 (application/json)
 
     + Schema
-
-            {
-                "compensation-id": "Compensation ID"
-            }
-
-+ Response 401 (application/json)
-
-    Error during authentication.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 403 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_IN_GROUP (string)
-            + PAYER_NOT_IN_GROUP (string)
-            + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-
-        
-## View a compensation [GET /compensation/{compensationid}]
-
-+ Parameters
-    + compensationid: 852 (integer) - ID of the compensation
-
-+ Response 200 (application/json)
-
-    + Schema
         
             {
-                "title": "Title",
+                "id": (integer),
                 "amount": (integer) "Amount in Rappen/Cents",
                 "payer": (integer) "ID of the payer",
                 "payer-name": "Name of the payer",
@@ -708,17 +811,17 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "update-time": (datetime) "Update Time",
             }
 
-+ Response 401 (application/json)
 
-    Error during authentication.
 
-    + Body
++ Response 403 (application/json)
 
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
+    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_IN_GROUP (string)
+            + PAYER_NOT_IN_GROUP (string)
+            + PROFITEER_NOT_IN_GROUP (string)
 
     + Schema
 
@@ -727,6 +830,107 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "ERROR_CODE",
                     ...
                 ]
+            }
+
++ Response 404 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID is not found:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_FOUND (string)
+            + PAYER_NOT_FOUND (string)
+            + PROFITEER_NOT_FOUND (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
+## Get compensations [GET /groups/{groupid}/compensations{?limit}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + limit: 20 (number, optional) - The maximum number of results to return.
+        + Default: `20`
++ Response 200 (application/json)
+
+    + Schema
+        
+            [
+                {
+                    "id": (integer),
+                    "amount": (integer) "Amount in Rappen/Cents",
+                    "payer": (integer) "ID of the payer",
+                    "payer-name": "Name of the payer",
+                    "profiteer": (integer) "ID of the profiteer",
+                    "profiteer-name:" "Name of the profiteer",
+                    "create-time": (datetime) "Create time",
+                    "update-time": (datetime) "Update Time",
+                }, ...
+            ]
+
++ Response 403 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_IN_GROUP (string)
+            + PAYER_NOT_IN_GROUP (string)
+            + PROFITEER_NOT_IN_GROUP (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 404 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID is not found:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_FOUND (string)
+            + PAYER_NOT_FOUND (string)
+            + PROFITEER_NOT_FOUND (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+        
+## Get a compensation [GET /groups/{groupid}/compensations/{compensationid}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + compensationid: 852 (integer) - ID of the expense    
+
++ Response 200 (application/json)
+
+    + Schema
+        
+            {
+                "id": (integer),
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteer": (integer) "ID of the profiteer",
+                "profiteer-name:" "Name of the profiteer",
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time",
             }
 
 + Response 403 (application/json)
@@ -767,43 +971,35 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 ]
             }
  
-## Edit a compensation [PUT /compensation/{compensationid}]
+## Edit a compensation [PUT /groups/{groupid}/compensations/{compensationid}]
 
 + Parameters
-    + compensationid: 852 (integer) - ID of the compensation
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + compensationid: 852 (integer) - ID of the expense    + id: 852 (integer) - ID of the compensation
 
 + Request (application/json)
 
         {
-            "title": "Title",
             "amount": (integer) "Amount in Rappen/Cents",
             "payer": (integer) "ID of the payer",
             "profiteer": (integer) "ID of the profiteer",
         }
         
-+ Response 200
-
-+ Response 401 (application/json)
-
-    Error during authentication.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
++ Response 200 (application/json)
 
     + Schema
-
+        
             {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
+                "id": (integer),
+                "amount": (integer) "Amount in Rappen/Cents",
+                "payer": (integer) "ID of the payer",
+                "payer-name": "Name of the payer",
+                "profiteer": (integer) "ID of the profiteer",
+                "profiteer-name:" "Name of the profiteer",
+                "create-time": (datetime) "Create time",
+                "update-time": (datetime) "Update Time",
             }
-
+            
 + Response 403 (application/json)
 
     Transaction ID, Payer ID or Profiteer ID do not belong to current group:
@@ -844,112 +1040,59 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
 
         
-## Delete a compensation [DELETE /compensation/{compensationid}]
+## Delete a compensation [DELETE /groups/{groupid}/compensations/{compensationid}]
 
 + Parameters
-    + compensationid: 852 (integer) - ID of the compensation
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + compensationid: 852 (integer) - ID of the expense
         
 + Response 200
-
-+ Response 401 (application/json)
-
-    Error during authentication.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-# Group Debt
         
-## Debt [/debt]
+## Debt [/groups/{groupid}/debt]
 
 Shows the debt to the group with the concept of a balance.
 
 * A positive value means, the person has a credit on the group (the group owes this person)
 * A negative value means, the person has a debt on the group (he/she owes the group)
 
-### View Debts [GET]
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+
+### Get Debts [GET]
+
 + Response 200
-
-        [
-
-            {
-                "id": (integer) "ID of the person",
-                "name": "Name of the person",
-                "balance": (integer) "Balance of the person in Rappen/Cents",
-            }, ...
-        ]
-
-+ Response 401 (application/json)
-
-    Error during authentication.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
 
     + Schema
 
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }        
+            [
 
-## Settle up [/settleup]
+                {
+                    "id": (integer) "ID of the person",
+                    "name": "Name of the person",
+                    "balance": (integer) "Balance of the person in Rappen/Cents",
+                }, ...
+            ]
+
+## Settle up [/groups/{groupid}/settleup]
 
 Shows suggested compensations between group members. They're formatted as multiple compensations, so you could re-use them when the user wants to quickly settle up.
 
-### View Settle Up [GET]
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+
+### Get Settle Up [GET]
 
 + Response 200
 
-        [
-            {
-                "title": "Title",
-                "amount": (integer) "Amount in Rappen/Cents",
-                "payer": (integer) "ID of the payer",
-                "payer-name": "Name of the payer",
-                "profiteer": (integer) "ID of the profiteer",
-                "profiteer-name:" "Name of the profiteer",
-            }, ...
-        ]
-
-+ Response 401 (application/json)
-
-    Error during authentication.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_AUTHORIZED_TO_GROUP",
-                ]
-            }
-
     + Schema
 
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
+            [
+                {
+                    "amount": (integer) "Amount in Rappen/Cents",
+                    "payer": (integer) "ID of the payer",
+                    "payer-name": "Name of the payer",
+                    "profiteer": (integer) "ID of the profiteer",
+                    "profiteer-name:" "Name of the profiteer",
+                }, ...
+            ]
+
