@@ -87,11 +87,6 @@ A group is a collection of people and their expenses and compensations.
 
 ## Edit a group [PUT /groups/{id}]
 
-The backend implements the following behavior concerning people's IDs and names:
-
-* If an ID is given and it belongs to the group already, the name of the person gets changed
-* If the ID is not given, a new person gets created and associated with the group.
-
 + Parameters
     + id: am5s9l5k9d43 (string) - ID of the group
 
@@ -100,17 +95,8 @@ The backend implements the following behavior concerning people's IDs and names:
     + Schema
         
             {
-                "id": "Group ID",
                 "name": "Group name",
-                "people": [
-                    {
-                        "id": (integer) "Person ID",
-                        "name": "Person Name"
-                    }, ...
-                ],
-                "currency": (array[currency]) "Default currency",
-                "update-time": "2012-04-23T18:25:43.511Z",
-                "create-time": "2010-04-32T12:21:13.495Z",
+                "currency": (enum[currency]) "Default currency",
             }
         
 + Response 200
@@ -135,50 +121,6 @@ The backend implements the following behavior concerning people's IDs and names:
                     ...
                 ]
             }    
-
-+ Response 409 (application/json)
-
-    The person names clash in this group.
-
-    + Body
-
-            {
-                "error": [
-                    "PEOPLE_NAME_CONFLICT",
-                ]
-            }
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 411 (application/json)
-
-    There need to be at least two people in a group.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_ENOUGH_PEOPLE",
-                ]
-            }
-
-    + Schema
-
-            {
-            
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            
-            }
 
 + Response 416 (application/json)
 
@@ -320,6 +262,27 @@ The backend implements the following behavior concerning people's IDs and names:
                 "create-time": "2010-04-32T12:21:13.495Z",
             }  
 
++ Response 404 (application/json)
+
+    The person ID is not found in this group
+
+    + Body
+
+            {
+                "error": [
+                    "PERSON_NOT_FOUND",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 + Response 409 (application/json)
 
     The person names clash in this group.
@@ -348,6 +311,27 @@ The backend implements the following behavior concerning people's IDs and names:
     + personid: 4 (integer) - ID of the person
 
 + Response 200
+
++ Response 404 (application/json)
+
+    The person ID is not found in this group
+
+    + Body
+
+            {
+                "error": [
+                    "PERSON_NOT_FOUND",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 # Expense [/groups/{groupid}/expenses]
 
