@@ -320,6 +320,24 @@ The backend implements the following behavior concerning people's IDs and names:
                 "create-time": "2010-04-32T12:21:13.495Z",
             }  
 
++ Response 403 (application/json)
+
+    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+
+    + Attributes (object)
+        + error (array)
+            + TRANSACTION_NOT_IN_GROUP (string)
+            + PAYER_NOT_IN_GROUP (string)
+            + PROFITEER_NOT_IN_GROUP (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+
 + Response 409 (application/json)
 
     The person names clash in this group.
