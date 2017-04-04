@@ -292,25 +292,9 @@ A group is a collection of people and their expenses and compensations.
                 "create-time": "2010-04-32T12:21:13.495Z",
             }  
 
-+ Response 403 (application/json)
-
-    Person is not in this group
-
-    + Attributes (object)
-        + error (array)
-            + PERSON_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-
 + Response 404 (application/json)
 
-    The person ID is not found
+    The person ID is not found in this group
 
     + Body
 
@@ -358,25 +342,9 @@ A group is a collection of people and their expenses and compensations.
 
 + Response 200
 
- Response 403 (application/json)
-
-    Person is not in this group
-
-    + Attributes (object)
-        + error (array)
-            + PERSON_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-
 + Response 404 (application/json)
 
-    The person ID is not found
+    The person ID is not found in this group
 
     + Body
 
