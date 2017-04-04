@@ -157,29 +157,6 @@ The backend implements the following behavior concerning people's IDs and names:
                 ]
             }
 
-+ Response 411 (application/json)
-
-    There need to be at least two people in a group.
-
-    + Body
-
-            {
-                "error": [
-                    "NOT_ENOUGH_PEOPLE",
-                ]
-            }
-
-    + Schema
-
-            {
-            
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            
-            }
-
 + Response 416 (application/json)
 
     The currency does not fit to the array values.
@@ -322,13 +299,11 @@ The backend implements the following behavior concerning people's IDs and names:
 
 + Response 403 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Person is not in this group
 
     + Attributes (object)
         + error (array)
-            + TRANSACTION_NOT_IN_GROUP (string)
-            + PAYER_NOT_IN_GROUP (string)
-            + PROFITEER_NOT_IN_GROUP (string)
+            + PERSON_NOT_IN_GROUP (string)
 
     + Schema
 
@@ -366,6 +341,46 @@ The backend implements the following behavior concerning people's IDs and names:
     + personid: 4 (integer) - ID of the person
 
 + Response 200
+
+ Response 403 (application/json)
+
+    Person is not in this group
+
+    + Attributes (object)
+        + error (array)
+            + PERSON_NOT_IN_GROUP (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+
+
++ Response 411 (application/json)
+
+    There need to be at least two people in a group.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_ENOUGH_PEOPLE",
+                ]
+            }
+
+    + Schema
+
+            {
+            
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            
+            }
 
 # Expense [/groups/{groupid}/expenses]
 
