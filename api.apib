@@ -308,6 +308,27 @@ A group is a collection of people and their expenses and compensations.
                     ...
                 ]
 
++ Response 404 (application/json)
+
+    The person ID is not found
+
+    + Body
+
+            {
+                "error": [
+                    "PERSON_NOT_FOUND",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 + Response 409 (application/json)
 
     The person names clash in this group.
@@ -352,6 +373,27 @@ A group is a collection of people and their expenses and compensations.
                     "ERROR_CODE",
                     ...
                 ]
+
++ Response 404 (application/json)
+
+    The person ID is not found
+
+    + Body
+
+            {
+                "error": [
+                    "PERSON_NOT_FOUND",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 # Expense [/groups/{groupid}/expenses]
 
