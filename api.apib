@@ -131,27 +131,6 @@ A group is a collection of people and their expenses and compensations.
                 ]
             }    
 
-+ Response 409 (application/json)
-
-    The person names clash in this group.
-
-    + Body
-
-            {
-                "error": [
-                    "PEOPLE_NAME_CONFLICT",
-                ]
-            }
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
 + Response 416 (application/json)
 
     The currency does not fit to the array values.
