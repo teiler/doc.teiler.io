@@ -1158,8 +1158,10 @@ Shows the debt to the group with the concept of a balance.
             [
 
                 {
-                    "id": (integer) "ID of the person",
-                    "name": "Name of the person",
+                    "person": [
+                        "id": (integer) "ID of the person",
+                        "name": "Name of the person",
+                    ],
                     "balance": (integer) "Balance of the person in Rappen/Cents",
                 }, ...
             ]
@@ -1201,10 +1203,14 @@ Shows suggested compensations between group members. They're formatted as multip
             [
                 {
                     "amount": (integer) "Amount in Rappen/Cents",
-                    "payer": (integer) "ID of the payer",
-                    "payer-name": "Name of the payer",
-                    "profiteer": (integer) "ID of the profiteer",
-                    "profiteer-name:" "Name of the profiteer",
+                    "payer": [
+                        "id": (integer) "ID of the person",
+                        "name": "Name of the person",
+                    ],
+                    "profiteer": [
+                        "id": (integer) "ID of the person",
+                        "name": "Name of the person",
+                    ],
                 }, ...
             ]
 
