@@ -385,34 +385,15 @@ An expense is something one person bought and is shared with other people. The p
                 "update-time": (datetime) "Update Time"
             }
 
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
             + TRANSACTION_NOT_IN_GROUP (string)
             + PAYER_NOT_IN_GROUP (string)
             + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
 
     + Schema
 
@@ -471,34 +452,15 @@ An expense is something one person bought and is shared with other people. The p
                 }, ...
             ]
 
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
             + TRANSACTION_NOT_IN_GROUP (string)
             + PAYER_NOT_IN_GROUP (string)
             + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
 
     + Schema
 
@@ -555,34 +517,15 @@ An expense is something one person bought and is shared with other people. The p
                 "update-time": (datetime) "Update Time"
             }
 
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
             + TRANSACTION_NOT_IN_GROUP (string)
             + PAYER_NOT_IN_GROUP (string)
             + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
 
     + Schema
 
@@ -656,34 +599,15 @@ An expense is something one person bought and is shared with other people. The p
                 "update-time": (datetime) "Update Time"
             }
 
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
             + TRANSACTION_NOT_IN_GROUP (string)
             + PAYER_NOT_IN_GROUP (string)
             + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
 
     + Schema
 
@@ -721,34 +645,15 @@ An expense is something one person bought and is shared with other people. The p
         
 + Response 200
 
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
             + TRANSACTION_NOT_IN_GROUP (string)
             + PAYER_NOT_IN_GROUP (string)
             + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
 
     + Schema
 
@@ -819,34 +724,15 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
 
 
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
             + TRANSACTION_NOT_IN_GROUP (string)
             + PAYER_NOT_IN_GROUP (string)
             + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
 
     + Schema
 
@@ -884,34 +770,15 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 }, ...
             ]
 
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
             + TRANSACTION_NOT_IN_GROUP (string)
             + PAYER_NOT_IN_GROUP (string)
             + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
 
     + Schema
 
@@ -947,34 +814,15 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "update-time": (datetime) "Update Time",
             }
 
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
             + TRANSACTION_NOT_IN_GROUP (string)
             + PAYER_NOT_IN_GROUP (string)
             + PROFITEER_NOT_IN_GROUP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 404 (application/json)
-
-    Transaction ID, Payer ID or Profiteer ID is not found:
-
-    + Attributes (object)
-        + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
 
     + Schema
 
@@ -1022,9 +870,9 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "update-time": (datetime) "Update Time",
             }
             
-+ Response 403 (application/json)
++ Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID do not belong to current group:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
@@ -1041,15 +889,24 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 ]
             }
 
+        
+## Delete a compensation [DELETE /groups/{groupid}/compensations/{compensationid}]
+
++ Parameters
+    + groupid: am5s9l5k9d43 (string) - ID of the group
+    + compensationid: 852 (integer) - ID of the expense
+        
++ Response 200
+
 + Response 404 (application/json)
 
-    Transaction ID, Payer ID or Profiteer ID is not found:
+    Transaction ID, Payer ID or Profiteer ID is not found in this group
 
     + Attributes (object)
         + error (array)
-            + TRANSACTION_NOT_FOUND (string)
-            + PAYER_NOT_FOUND (string)
-            + PROFITEER_NOT_FOUND (string)
+            + TRANSACTION_NOT_IN_GROUP (string)
+            + PAYER_NOT_IN_GROUP (string)
+            + PROFITEER_NOT_IN_GROUP (string)
 
     + Schema
 
@@ -1059,16 +916,6 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     ...
                 ]
             }
-
-
-        
-## Delete a compensation [DELETE /groups/{groupid}/compensations/{compensationid}]
-
-+ Parameters
-    + groupid: am5s9l5k9d43 (string) - ID of the group
-    + compensationid: 852 (integer) - ID of the expense
-        
-+ Response 200
         
 ## Debt [/groups/{groupid}/debt]
 
