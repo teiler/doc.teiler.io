@@ -194,6 +194,27 @@ A group is a collection of people and their expenses and compensations.
                 "create-time": "2010-04-32T12:21:13.495Z",
             }
 
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 + Response 409 (application/json)
 
     The person names clash in this group.
@@ -235,6 +256,26 @@ A group is a collection of people and their expenses and compensations.
                 }, ...
             ]  
 
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 
 ## Edit a person [PUT /groups/{groupid}/people/{personid}]
@@ -261,6 +302,27 @@ A group is a collection of people and their expenses and compensations.
                 "update-time": "2012-04-23T18:25:43.511Z",
                 "create-time": "2010-04-32T12:21:13.495Z",
             }  
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 + Response 404 (application/json)
 
@@ -311,6 +373,27 @@ A group is a collection of people and their expenses and compensations.
     + personid: 4 (integer) - ID of the person
 
 + Response 200
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 + Response 404 (application/json)
 
@@ -385,6 +468,27 @@ An expense is something one person bought and is shared with other people. The p
                 "update-time": (datetime) "Update Time"
             }
 
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 + Response 404 (application/json)
 
     Payer ID or Profiteer ID is not found in this group
@@ -451,6 +555,27 @@ An expense is something one person bought and is shared with other people. The p
                 }, ...
             ]
 
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 + Response 406 (application/json)
 
     Factors dont add up to 1.
@@ -495,6 +620,27 @@ An expense is something one person bought and is shared with other people. The p
                 ],
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time"
+            }
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
             }
 
 + Response 404 (application/json)
@@ -577,6 +723,27 @@ An expense is something one person bought and is shared with other people. The p
                 "update-time": (datetime) "Update Time"
             }
 
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 + Response 404 (application/json)
 
     Transaction ID, Payer ID or Profiteer ID is not found in this group
@@ -622,6 +789,27 @@ An expense is something one person bought and is shared with other people. The p
     + expenseid: 2634 (integer) - ID of the expense
         
 + Response 200
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 + Response 404 (application/json)
 
@@ -698,7 +886,26 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "update-time": (datetime) "Update Time",
             }
 
++ Response 401 (application/json)
 
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 + Response 404 (application/json)
 
@@ -744,6 +951,27 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "update-time": (datetime) "Update Time",
                 }, ...
             ]
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
         
 ## Get a compensation [GET /groups/{groupid}/compensations/{compensationid}]
 
@@ -823,6 +1051,27 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
             
 + Response 404 (application/json)
 
@@ -851,6 +1100,27 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
     + compensationid: 852 (integer) - ID of the expense
         
 + Response 200
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 + Response 404 (application/json)
 
@@ -894,6 +1164,27 @@ Shows the debt to the group with the concept of a balance.
                 }, ...
             ]
 
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 ## Settle up [/groups/{groupid}/settleup]
 
 Shows suggested compensations between group members. They're formatted as multiple compensations, so you could re-use them when the user wants to quickly settle up.
@@ -917,3 +1208,23 @@ Shows suggested compensations between group members. They're formatted as multip
                 }, ...
             ]
 
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
