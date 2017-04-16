@@ -435,14 +435,14 @@ An expense is something one person bought and is shared with other people. The p
             {
                 "title": "Title",
                 "amount": (integer) "Amount in Rappen/Cents",
-                "payer": [
+                "payer": {
                     "id": (integer) "Payer ID",
-                ], 
+                }, 
                 "profiteers": [
                     {
-                        "profiteer": [
+                        "profiteer": {
                             "id": (integer) "Profiteer ID",
-                        ], 
+                        }, 
                         "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
                     }, ...
                 ],
@@ -456,18 +456,16 @@ An expense is something one person bought and is shared with other people. The p
                 "id": "Expense ID",
                 "title": "Title",
                 "amount": (integer) "Amount in Rappen/Cents",
-                "payer": [
+                "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name"
-                ], 
-                "payer": (integer) "ID of the payer",
-                "payer-name": "Name of the payer",
+                }, 
                 "profiteers": [
                     {
-                        "profiteer": [
+                        "profiteer": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
-                        ], 
+                        }, 
                         "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
                     }, ...
                 ],
@@ -546,16 +544,16 @@ An expense is something one person bought and is shared with other people. The p
                 {
                     "title": "Title",
                     "amount": (integer) "Amount in Rappen/Cents",
-                    "payer": [
+                    "payer": {
                         "id": (integer) "Payer ID",
                         "name": "Payer Name"
-                    ], 
+                    }, 
                     "profiteers": [
                         {
-                            "profiteer": [
+                            "profiteer": {
                                 "id": (integer) "Profiteer ID",
                                 "name": "Profiteer Name"
-                            ], 
+                            }, 
                             "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
                         }, ...
                     ],
@@ -616,16 +614,16 @@ An expense is something one person bought and is shared with other people. The p
                 "id": "Expense ID",
                 "title": "Title",
                 "amount": (integer) "Amount in Rappen/Cents",
-                "payer": [
+                "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
-                ], 
+                }, 
                 "profiteers": [
                     {
-                        "profiteer": [
+                        "profiteer": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
-                        ], 
+                        }, 
                         "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
                     }, ...
                 ],
@@ -700,14 +698,14 @@ An expense is something one person bought and is shared with other people. The p
         {
             "title": "Title",
             "amount": (integer) "Amount in Rappen/Cents",
-            "payer": [
+            "payer": {
                     "id": (integer) "Payer ID",
-            ], 
+            }, 
             "profiteers": [
                 {
-                    "profiteer": [
+                    "profiteer": {
                             "id": (integer) "Profiteer ID",
-                        ], 
+                        }, 
                     "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
                 }, ...
             ],
@@ -721,16 +719,16 @@ An expense is something one person bought and is shared with other people. The p
                 "id": "Expense ID",
                 "title": "Title",
                 "amount": (integer) "Amount in Rappen/Cents",
-                "payer": [
+                "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
-                ], 
+                }, 
                 "profiteers": [
                     {
-                        "profiteer": [
+                        "profiteer": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
-                        ], 
+                        }, 
                         "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
                     }, ...
                 ],
@@ -874,12 +872,12 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
         {
             "amount": (integer) "Amount in Rappen/Cents",
-            "payer": [
+            "payer": {
                     "id": (integer) "Payer ID",
-            ], 
-            "profiteer": [
+            }, 
+            "profiteer": {
                     "id": (integer) "Profiteer ID",
-            ], 
+            }, 
         }
         
 + Response 200 (application/json)
@@ -889,14 +887,14 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
             {
                 "id": (integer),
                 "amount": (integer) "Amount in Rappen/Cents",
-                "payer": [
+                "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
-                ], 
-                "profiteer": [
+                }, 
+                "profiteer": {
                     "id": (integer) "Profiteer ID",
                     "name": "Profiteer Name",
-                ], 
+                }, 
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
@@ -954,14 +952,14 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 {
                     "id": (integer),
                     "amount": (integer) "Amount in Rappen/Cents",
-                    "payer": [
+                    "payer": {
                         "id": (integer) "Payer ID",
                         "name": "Payer Name",
-                    ], 
-                    "profiteer": [
+                    }, 
+                    "profiteer": {
                         "id": (integer) "Profiteer ID",
                         "name": "Profiteer Name",
-                    ], 
+                    }, 
                     "create-time": (datetime) "Create time",
                     "update-time": (datetime) "Update Time",
                 }, ...
@@ -1001,14 +999,14 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
             {
                 "id": (integer),
                 "amount": (integer) "Amount in Rappen/Cents",
-                "payer": [
+                "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
-                ], 
-                "profiteer": [
+                }, 
+                "profiteer": {
                     "id": (integer) "Profiteer ID",
                     "name": "Profiteer Name",
-                ], 
+                }, 
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
@@ -1040,12 +1038,12 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
         {
             "amount": (integer) "Amount in Rappen/Cents",
-            "payer": [
+            "payer": {
                     "id": (integer) "Payer ID",
-                ], 
-                "profiteer": [
-                    "id": (integer) "Profiteer ID",
-                ], 
+            }, 
+            "profiteer": {
+                "id": (integer) "Profiteer ID",
+            }, 
         }
         
 + Response 200 (application/json)
@@ -1055,14 +1053,14 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
             {
                 "id": (integer),
                 "amount": (integer) "Amount in Rappen/Cents",
-                "payer": [
+                "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
-                ], 
-                "profiteer": [
+                }, 
+                "profiteer": {
                     "id": (integer) "Profiteer ID",
                     "name": "Profiteer Name",
-                ], 
+                }, 
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
@@ -1173,10 +1171,10 @@ Shows the debt to the group with the concept of a balance.
             [
 
                 {
-                    "person": [
+                    "person": }
                         "id": (integer) "ID of the person",
                         "name": "Name of the person",
-                    ],
+                    },
                     "balance": (integer) "Balance of the person in Rappen/Cents",
                 }, ...
             ]
@@ -1218,14 +1216,14 @@ Shows suggested compensations between group members. They're formatted as multip
             [
                 {
                     "amount": (integer) "Amount in Rappen/Cents",
-                    "payer": [
+                    "payer": {
                         "id": (integer) "ID of the person",
                         "name": "Name of the person",
-                    ],
-                    "profiteer": [
+                    },
+                    "profiteer": {
                         "id": (integer) "ID of the person",
                         "name": "Name of the person",
-                    ],
+                    },
                 }, ...
             ]
 
