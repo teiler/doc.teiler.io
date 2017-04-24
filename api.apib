@@ -440,7 +440,7 @@ An expense is something one person bought and is shared with other people. The p
                 "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                 "profiteers": [
                     {
-                        "profiteer": {
+                        "person": {
                             "id": (integer) "Profiteer ID",
                         }, 
                         "share": (integer) "Amount in Rappen/Cents",
@@ -462,7 +462,7 @@ An expense is something one person bought and is shared with other people. The p
                 }, 
                 "profiteers": [
                     {
-                        "profiteer": {
+                        "person": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         }, 
@@ -550,7 +550,7 @@ An expense is something one person bought and is shared with other people. The p
                     }, 
                     "profiteers": [
                         {
-                            "profiteer": {
+                            "person": {
                                 "id": (integer) "Profiteer ID",
                                 "name": "Profiteer Name"
                             }, 
@@ -603,7 +603,7 @@ An expense is something one person bought and is shared with other people. The p
                 }, 
                 "profiteers": [
                     {
-                        "profiteer": {
+                        "person": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         }, 
@@ -669,9 +669,9 @@ An expense is something one person bought and is shared with other people. The p
             }, 
             "profiteers": [
                 {
-                    "profiteer": {
+                    "person": {
                             "id": (integer) "Profiteer ID",
-                        }, 
+                    }, 
                     "share": (integer) "Amount in Rappen/Cents",
                 }, ...
             ],
@@ -691,7 +691,7 @@ An expense is something one person bought and is shared with other people. The p
                 }, 
                 "profiteers": [
                     {
-                        "profiteer": {
+                        "person": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         }, 
@@ -823,7 +823,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "id": (integer) "Payer ID",
             }, 
             "profiteer": {
-                "profiteer": {
+                "person": {
                     "id": (integer) "Profiteer ID",
                 },
                 "share": (integer) "Amount in Rappen/Cents",
@@ -842,7 +842,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "name": "Payer Name",
                 }, 
                 "profiteer": {
-                    "profiteer": {
+                    "person": {
                         "id": (integer) "Profiteer ID",
                         "name": "Profiteer Name"
                     },
@@ -910,7 +910,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                         "name": "Payer Name",
                     }, 
                     "profiteer": {
-                        "profiteer": {
+                        "person": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         },
@@ -960,7 +960,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "name": "Payer Name",
                 }, 
                 "profiteer": {
-                    "profiteer": {
+                    "person": {
                         "id": (integer) "Profiteer ID",
                         "name": "Profiteer Name"
                     },
@@ -1001,7 +1001,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "id": (integer) "Payer ID",
             }, 
             "profiteer": {
-                "profiteer": {
+                "person": {
                     "id": (integer) "Profiteer ID",
                 },
                 "share": (integer) "Amount in Rappen/Cents",
@@ -1020,9 +1020,11 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "name": "Payer Name",
                 }, 
                 "profiteer": {
-                    "id": (integer) "Profiteer ID",
-                    "name": "Profiteer Name",
-                }, 
+                    "person": {
+                        "id": (integer) "Profiteer ID",
+                    },
+                    "share": (integer) "Amount in Rappen/Cents",
+                },
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
