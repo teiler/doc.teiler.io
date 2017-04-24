@@ -437,6 +437,7 @@ An expense is something one person bought and is shared with other people. The p
                 "payer": {
                     "id": (integer) "Payer ID",
                 }, 
+                "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                 "profiteers": [
                     {
                         "profiteer": {
@@ -454,7 +455,7 @@ An expense is something one person bought and is shared with other people. The p
             {
                 "id": "Expense ID",
                 "title": "Title",
-                "amount": (integer) "Amount in Rappen/Cents",
+                "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name"
@@ -511,6 +512,23 @@ An expense is something one person bought and is shared with other people. The p
                 ]
             }
 
++ Response 406 (application/json)
+
+    Shares don't add up to the amount
+
+    + Attributes (object)
+        + error (array)
+            + SHARES_DONT_ADD_UP
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 ## Get last expenses [GET /groups/{groupid}/expenses{?limit}]
 
 + Parameters
@@ -525,7 +543,7 @@ An expense is something one person bought and is shared with other people. The p
             [
                 {
                     "title": "Title",
-                    "amount": (integer) "Amount in Rappen/Cents",
+                    "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                     "payer": {
                         "id": (integer) "Payer ID",
                         "name": "Payer Name"
@@ -578,7 +596,7 @@ An expense is something one person bought and is shared with other people. The p
             {
                 "id": "Expense ID",
                 "title": "Title",
-                "amount": (integer) "Amount in Rappen/Cents",
+                "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
@@ -645,6 +663,7 @@ An expense is something one person bought and is shared with other people. The p
 
         {
             "title": "Title",
+            "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
             "payer": {
                     "id": (integer) "Payer ID",
             }, 
@@ -665,7 +684,7 @@ An expense is something one person bought and is shared with other people. The p
             {
                 "id": "Expense ID",
                 "title": "Title",
-                "amount": (integer) "Amount in Rappen/Cents",
+                "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
@@ -723,7 +742,22 @@ An expense is something one person bought and is shared with other people. The p
                 ]
             }
         
++ Response 406 (application/json)
 
+    Shares don't add up to the amount
+
+    + Attributes (object)
+        + error (array)
+            + SHARES_DONT_ADD_UP
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 ## Delete an expense [DELETE /groups/{groupid}/expenses/{expenseid}]
 
@@ -784,7 +818,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 + Request (application/json)
 
         {
-            "amount": (integer) "Amount in Rappen/Cents",
+            "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
             "payer": {
                     "id": (integer) "Payer ID",
             }, 
@@ -799,7 +833,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
         
             {
                 "id": (integer),
-                "amount": (integer) "Amount in Rappen/Cents",
+                "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
@@ -864,7 +898,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
             [
                 {
                     "id": (integer),
-                    "amount": (integer) "Amount in Rappen/Cents",
+                    "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                     "payer": {
                         "id": (integer) "Payer ID",
                         "name": "Payer Name",
@@ -911,7 +945,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
         
             {
                 "id": (integer),
-                "amount": (integer) "Amount in Rappen/Cents",
+                "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
@@ -950,7 +984,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 + Request (application/json)
 
         {
-            "amount": (integer) "Amount in Rappen/Cents",
+            "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
             "payer": {
                     "id": (integer) "Payer ID",
             }, 
@@ -965,7 +999,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
         
             {
                 "id": (integer),
-                "amount": (integer) "Amount in Rappen/Cents",
+                "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
