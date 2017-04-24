@@ -440,7 +440,7 @@ An expense is something one person bought and is shared with other people. The p
                 "amount": (integer) "Whole amount in Rappen/Cents, for convenience and checking purposes",
                 "profiteers": [
                     {
-                        "profiteer": {
+                        "person": {
                             "id": (integer) "Profiteer ID",
                         }, 
                         "share": (integer) "Amount in Rappen/Cents",
@@ -462,7 +462,7 @@ An expense is something one person bought and is shared with other people. The p
                 }, 
                 "profiteers": [
                     {
-                        "profiteer": {
+                        "person": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         }, 
@@ -550,7 +550,7 @@ An expense is something one person bought and is shared with other people. The p
                     }, 
                     "profiteers": [
                         {
-                            "profiteer": {
+                            "person": {
                                 "id": (integer) "Profiteer ID",
                                 "name": "Profiteer Name"
                             }, 
@@ -603,7 +603,7 @@ An expense is something one person bought and is shared with other people. The p
                 }, 
                 "profiteers": [
                     {
-                        "profiteer": {
+                        "person": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         }, 
@@ -669,9 +669,9 @@ An expense is something one person bought and is shared with other people. The p
             }, 
             "profiteers": [
                 {
-                    "profiteer": {
+                    "person": {
                             "id": (integer) "Profiteer ID",
-                        }, 
+                    }, 
                     "share": (integer) "Amount in Rappen/Cents",
                 }, ...
             ],
@@ -691,7 +691,7 @@ An expense is something one person bought and is shared with other people. The p
                 }, 
                 "profiteers": [
                     {
-                        "profiteer": {
+                        "person": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         }, 
@@ -823,8 +823,11 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "id": (integer) "Payer ID",
             }, 
             "profiteer": {
+                "person": {
                     "id": (integer) "Profiteer ID",
-            }, 
+                },
+                "share": (integer) "Amount in Rappen/Cents",
+            },
         }
         
 + Response 200 (application/json)
@@ -839,9 +842,12 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "name": "Payer Name",
                 }, 
                 "profiteer": {
-                    "id": (integer) "Profiteer ID",
-                    "name": "Profiteer Name",
-                }, 
+                    "person": {
+                        "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name"
+                    },
+                    "share": (integer) "Amount in Rappen/Cents",
+                },
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
@@ -904,9 +910,12 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                         "name": "Payer Name",
                     }, 
                     "profiteer": {
-                        "id": (integer) "Profiteer ID",
-                        "name": "Profiteer Name",
-                    }, 
+                        "person": {
+                            "id": (integer) "Profiteer ID",
+                            "name": "Profiteer Name"
+                        },
+                        "share": (integer) "Amount in Rappen/Cents",
+                    },
                     "create-time": (datetime) "Create time",
                     "update-time": (datetime) "Update Time",
                 }, ...
@@ -951,11 +960,35 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "name": "Payer Name",
                 }, 
                 "profiteer": {
-                    "id": (integer) "Profiteer ID",
-                    "name": "Profiteer Name",
-                }, 
+                    "person": {
+                        "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name"
+                    },
+                    "share": (integer) "Amount in Rappen/Cents",
+                },
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
+            }
+
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
             }
 
 + Response 404 (application/json)
@@ -989,8 +1022,11 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "id": (integer) "Payer ID",
             }, 
             "profiteer": {
-                "id": (integer) "Profiteer ID",
-            }, 
+                "person": {
+                    "id": (integer) "Profiteer ID",
+                },
+                "share": (integer) "Amount in Rappen/Cents",
+            },
         }
         
 + Response 200 (application/json)
@@ -1005,9 +1041,11 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "name": "Payer Name",
                 }, 
                 "profiteer": {
-                    "id": (integer) "Profiteer ID",
-                    "name": "Profiteer Name",
-                }, 
+                    "person": {
+                        "id": (integer) "Profiteer ID",
+                    },
+                    "share": (integer) "Amount in Rappen/Cents",
+                },
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
