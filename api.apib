@@ -970,6 +970,27 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "update-time": (datetime) "Update Time",
             }
 
++ Response 401 (application/json)
+
+    Error during authentication.
+
+    + Body
+
+            {
+                "error": [
+                    "NOT_AUTHORIZED_TO_GROUP",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 + Response 404 (application/json)
 
     Transaction ID is not found in this group
