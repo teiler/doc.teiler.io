@@ -434,7 +434,6 @@ An expense is something one person bought and is shared with other people. The p
 
             {
                 "title": "Title",
-                "amount": (integer) "Amount in Rappen/Cents",
                 "payer": {
                     "id": (integer) "Payer ID",
                 }, 
@@ -443,7 +442,7 @@ An expense is something one person bought and is shared with other people. The p
                         "profiteer": {
                             "id": (integer) "Profiteer ID",
                         }, 
-                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                        "share": (integer) "Amount in Rappen/Cents",
                     }, ...
                 ],
             }
@@ -466,7 +465,7 @@ An expense is something one person bought and is shared with other people. The p
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         }, 
-                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                        "share": (integer) "Amount in Rappen/Cents",
                     }, ...
                 ],
                 "create-time": (datetime) "Create time",
@@ -512,23 +511,6 @@ An expense is something one person bought and is shared with other people. The p
                 ]
             }
 
-+ Response 406 (application/json)
-
-    Factors dont add up to 1.
-
-    + Attributes (object)
-        + error (array)
-            + FACTORS_DONT_ADD_UP (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
 ## Get last expenses [GET /groups/{groupid}/expenses{?limit}]
 
 + Parameters
@@ -554,7 +536,7 @@ An expense is something one person bought and is shared with other people. The p
                                 "id": (integer) "Profiteer ID",
                                 "name": "Profiteer Name"
                             }, 
-                            "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                            "share": (integer) "Amount in Rappen/Cents",
                         }, ...
                     ],
                     "create-time": (datetime) "Create time",
@@ -607,7 +589,7 @@ An expense is something one person bought and is shared with other people. The p
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         }, 
-                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                        "share": (integer) "Amount in Rappen/Cents",
                     }, ...
                 ],
                 "create-time": (datetime) "Create time",
@@ -663,7 +645,6 @@ An expense is something one person bought and is shared with other people. The p
 
         {
             "title": "Title",
-            "amount": (integer) "Amount in Rappen/Cents",
             "payer": {
                     "id": (integer) "Payer ID",
             }, 
@@ -672,7 +653,7 @@ An expense is something one person bought and is shared with other people. The p
                     "profiteer": {
                             "id": (integer) "Profiteer ID",
                         }, 
-                    "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                    "share": (integer) "Amount in Rappen/Cents",
                 }, ...
             ],
         }
@@ -695,7 +676,7 @@ An expense is something one person bought and is shared with other people. The p
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
                         }, 
-                        "factor": (float) "Percentage between 0 and 1.0 of the whole amount",
+                        "share": (integer) "Amount in Rappen/Cents",
                     }, ...
                 ],
                 "create-time": (datetime) "Create time",
@@ -732,23 +713,6 @@ An expense is something one person bought and is shared with other people. The p
             + TRANSACTION_NOT_FOUND (string)
             + PAYER_NOT_FOUND (string)
             + PROFITEER_NOT_FOUND (string)
-
-    + Schema
-
-            {
-                "error": [ 
-                    "ERROR_CODE",
-                    ...
-                ]
-            }
-
-+ Response 406 (application/json)
-
-    Factors dont add up to 1.
-
-    + Attributes (object)
-        + error (array)
-            + FACTORS_DONT_ADD_UP (string)
 
     + Schema
 
