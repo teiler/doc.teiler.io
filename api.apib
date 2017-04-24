@@ -823,8 +823,11 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "id": (integer) "Payer ID",
             }, 
             "profiteer": {
+                "profiteer": {
                     "id": (integer) "Profiteer ID",
-            }, 
+                },
+                "share": (integer) "Amount in Rappen/Cents",
+            },
         }
         
 + Response 200 (application/json)
@@ -839,9 +842,12 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "name": "Payer Name",
                 }, 
                 "profiteer": {
-                    "id": (integer) "Profiteer ID",
-                    "name": "Profiteer Name",
-                }, 
+                    "profiteer": {
+                        "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name"
+                    },
+                    "share": (integer) "Amount in Rappen/Cents",
+                },
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
@@ -904,9 +910,12 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                         "name": "Payer Name",
                     }, 
                     "profiteer": {
-                        "id": (integer) "Profiteer ID",
-                        "name": "Profiteer Name",
-                    }, 
+                        "profiteer": {
+                            "id": (integer) "Profiteer ID",
+                            "name": "Profiteer Name"
+                        },
+                        "share": (integer) "Amount in Rappen/Cents",
+                    },
                     "create-time": (datetime) "Create time",
                     "update-time": (datetime) "Update Time",
                 }, ...
@@ -951,9 +960,12 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "name": "Payer Name",
                 }, 
                 "profiteer": {
-                    "id": (integer) "Profiteer ID",
-                    "name": "Profiteer Name",
-                }, 
+                    "profiteer": {
+                        "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name"
+                    },
+                    "share": (integer) "Amount in Rappen/Cents",
+                },
                 "create-time": (datetime) "Create time",
                 "update-time": (datetime) "Update Time",
             }
@@ -989,8 +1001,11 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "id": (integer) "Payer ID",
             }, 
             "profiteer": {
-                "id": (integer) "Profiteer ID",
-            }, 
+                "profiteer": {
+                    "id": (integer) "Profiteer ID",
+                },
+                "share": (integer) "Amount in Rappen/Cents",
+            },
         }
         
 + Response 200 (application/json)
