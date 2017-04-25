@@ -43,10 +43,12 @@ A group is a collection of people and their expenses and compensations.
                 "create-time": "2010-04-32T12:21:13.495Z",
             }  
 
-## Get a group [GET /groups/{id}]
+## Get a group [GET /groups/{id}/{?active}]
 
 + Parameters
     + id: am5s9l5k9d43 (string) - ID of the group
+    + active: true (boolean, optional) - Just active people.
+        + Default: `true`
     
 + Response 200
 
@@ -59,6 +61,7 @@ A group is a collection of people and their expenses and compensations.
                     {
                         "id": (integer) "Person ID",
                         "name": "Person Name"
+                        "active": (boolean) "Person active",
                     }, ...
                 ],
                 "currency": (enum[currency]) "Default currency",
@@ -193,6 +196,7 @@ A group is a collection of people and their expenses and compensations.
             {
                 "id": "Person ID",
                 "name": "Person name",
+                "active": (boolean) "Person active"
                 "update-time": "2012-04-23T18:25:43.511Z",
                 "create-time": "2010-04-32T12:21:13.495Z",
             }
@@ -239,12 +243,14 @@ A group is a collection of people and their expenses and compensations.
                 ]
             }
 
-## Get People [GET /groups/{groupid}/people{?limit}]
+## Get People [GET /groups/{groupid}/people{?limit}&{?active}]
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
     + limit: 20 (number, optional) - The maximum number of results to return.
         + Default: `20`
+    + active: true (boolean, optional) - Just active people.
+        + Default: `true`
 
 + Response 200 (application/json)
 
@@ -254,6 +260,7 @@ A group is a collection of people and their expenses and compensations.
                 {
                     "id": "Person ID",
                     "name": "Person name",
+                    "active": (boolean) "Person active",
                     "update-time": "2012-04-23T18:25:43.511Z",
                     "create-time": "2010-04-32T12:21:13.495Z",
                 }, ...
@@ -302,6 +309,7 @@ A group is a collection of people and their expenses and compensations.
             {
                 "id": "Person ID",
                 "name": "Person name",
+                "active": (boolean) "Person active"
                 "update-time": "2012-04-23T18:25:43.511Z",
                 "create-time": "2010-04-32T12:21:13.495Z",
             }  
@@ -369,7 +377,7 @@ A group is a collection of people and their expenses and compensations.
                 ]
             } 
 
-## Delete a person [DELETE /groups/{groupid}/people/{personid}]
+## Deactivate a person [DELETE /groups/{groupid}/people/{personid}]
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
@@ -459,12 +467,14 @@ An expense is something one person bought and is shared with other people. The p
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name"
+                    "active": (boolean) "Person active",
                 }, 
                 "profiteers": [
                     {
                         "person": {
                             "id": (integer) "Profiteer ID",
                             "name": "Profiteer Name"
+                            "active": (boolean) "Person active",
                         }, 
                         "share": (integer) "Amount in Rappen/Cents",
                     }, ...
@@ -547,12 +557,14 @@ An expense is something one person bought and is shared with other people. The p
                     "payer": {
                         "id": (integer) "Payer ID",
                         "name": "Payer Name"
+                        "active": (boolean) "Person active",
                     }, 
                     "profiteers": [
                         {
                             "person": {
                                 "id": (integer) "Profiteer ID",
                                 "name": "Profiteer Name"
+                                "active": (boolean) "Person active",
                             }, 
                             "share": (integer) "Amount in Rappen/Cents",
                         }, ...
@@ -600,12 +612,14 @@ An expense is something one person bought and is shared with other people. The p
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
+                    "active": (boolean) "Person active",
                 }, 
                 "profiteers": [
                     {
                         "person": {
                             "id": (integer) "Profiteer ID",
-                            "name": "Profiteer Name"
+                            "name": "Profiteer Name",
+                            "active": (boolean) "Person active",
                         }, 
                         "share": (integer) "Amount in Rappen/Cents",
                     }, ...
@@ -688,12 +702,14 @@ An expense is something one person bought and is shared with other people. The p
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
+                    "active": (boolean) "Person active",
                 }, 
                 "profiteers": [
                     {
                         "person": {
                             "id": (integer) "Profiteer ID",
-                            "name": "Profiteer Name"
+                            "name": "Profiteer Name",
+                            "active": (boolean) "Person active",
                         }, 
                         "share": (integer) "Amount in Rappen/Cents",
                     }, ...
@@ -840,11 +856,13 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
+                    "active": (boolean) "Person active",
                 }, 
                 "profiteer": {
                     "person": {
                         "id": (integer) "Profiteer ID",
-                        "name": "Profiteer Name"
+                        "name": "Profiteer Name",
+                        "active": (boolean) "Person active",
                     },
                     "share": (integer) "Amount in Rappen/Cents",
                 },
@@ -908,11 +926,13 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     "payer": {
                         "id": (integer) "Payer ID",
                         "name": "Payer Name",
+                        "active": (boolean) "Person active",
                     }, 
                     "profiteer": {
                         "person": {
                             "id": (integer) "Profiteer ID",
-                            "name": "Profiteer Name"
+                            "name": "Profiteer Name",
+                            "active": (boolean) "Person active",
                         },
                         "share": (integer) "Amount in Rappen/Cents",
                     },
@@ -958,11 +978,13 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
+                    "active": (boolean) "Person active",
                 }, 
                 "profiteer": {
                     "person": {
                         "id": (integer) "Profiteer ID",
-                        "name": "Profiteer Name"
+                        "name": "Profiteer Name",
+                        "active": (boolean) "Person active",
                     },
                     "share": (integer) "Amount in Rappen/Cents",
                 },
@@ -1039,10 +1061,13 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 "payer": {
                     "id": (integer) "Payer ID",
                     "name": "Payer Name",
+                    "active": (boolean) "Person active",
                 }, 
                 "profiteer": {
                     "person": {
                         "id": (integer) "Profiteer ID",
+                        "name": "Profiteer Name",
+                        "active": (boolean) "Person active",
                     },
                     "share": (integer) "Amount in Rappen/Cents",
                 },
