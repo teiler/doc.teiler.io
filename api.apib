@@ -539,6 +539,24 @@ An expense is something one person bought and is shared with other people. The p
                 ]
             }
 
++ Response 410 (application/json)
+
+    The payer or one of the profiteers is inactive
+
+    + Attributes (object)
+        + error (array)
+            + PROFITEER_INACTIVE
+            + PAYER_INACTIVE
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
 ## Get last expenses [GET /groups/{groupid}/expenses{?limit}]
 
 + Parameters
@@ -899,6 +917,24 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
         + error (array)
             + PAYER_NOT_FOUND (string)
             + PROFITEER_NOT_FOUND (string)
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 410 (application/json)
+
+    The payer or the profiteer is inactive
+
+    + Attributes (object)
+        + error (array)
+            + PAYER_INACTIVE
+            + PROFITEER_INACTIVE
 
     + Schema
 
