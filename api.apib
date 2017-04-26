@@ -927,6 +927,15 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 ]
             }
 
+
++ Response 409 (application/json)
+
+    Payer and Profiteer clash.
+
+    + Attributes (object)
+        + error (array)
+            + PAYER_AND_ROFITEER_CONFLICT
+
 + Response 410 (application/json)
 
     The payer or the profiteer is inactive
@@ -1002,7 +1011,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
-    + compensationid: 852 (integer) - ID of the expense    
+    + compensationid: 852 (integer) - ID of the compensation    
 
 + Response 200 (application/json)
 
@@ -1070,7 +1079,7 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
-    + compensationid: 852 (integer) - ID of the expense    + id: 852 (integer) - ID of the compensation
+    + compensationid: 852 (integer) - ID of the compensation
 
 + Request (application/json)
 
@@ -1151,12 +1160,29 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                 ]
             }
 
++ Response 409 (application/json)
+
+    Payer and Profiteer clash.
+
+    + Attributes (object)
+        + error (array)
+            + PAYER_AND_ROFITEER_CONFLICT
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
         
 ## Delete a compensation [DELETE /groups/{groupid}/compensations/{compensationid}]
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
-    + compensationid: 852 (integer) - ID of the expense
+    + compensationid: 852 (integer) - ID of the compensation
         
 + Response 200
 
