@@ -226,6 +226,8 @@ A group is a collection of people and their expenses and compensations.
 
     The person names clash in this group.
 
+    Note, that you CAN re-use a person's name if it's deactivated
+
     + Body
 
             {
@@ -396,6 +398,8 @@ A group is a collection of people and their expenses and compensations.
             }
 
 ## Deactivate a person [DELETE /groups/{groupid}/people/{personid}]
+
+Deactivates a person. Note that there is no way to re-activate it.
 
 + Parameters
     + groupid: am5s9l5k9d43 (string) - ID of the group
