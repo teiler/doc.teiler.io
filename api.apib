@@ -546,11 +546,12 @@ An expense is something one person bought and is shared with other people. The p
 
 + Response 406 (application/json)
 
-    Shares don't add up to the amount
+    Shares don't add up to the amount or an amount / share was less than or equal to zero.
 
     + Attributes (object)
         + error (array)
             + SHARES_DONT_ADD_UP
+            + VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
 
     + Schema
 
@@ -801,11 +802,12 @@ An expense is something one person bought and is shared with other people. The p
         
 + Response 406 (application/json)
 
-    Shares don't add up to the amount
+    Shares don't add up to the amount or an amount / share was less than or equal to zero.
 
     + Attributes (object)
         + error (array)
             + SHARES_DONT_ADD_UP
+            + VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
 
     + Schema
 
@@ -944,6 +946,14 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
                     ...
                 ]
             }
+            
++ Response 406 (application/json)
+            
+    An amount was less than or equal to zero.
+
+    + Attributes (object)
+        + error (array)
+            + VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
 
 
 + Response 409 (application/json)
@@ -1157,6 +1167,23 @@ A compensation is a payment that is recorded in tylr. It basically follows the E
             + PAYER_NOT_FOUND (string)
             + PROFITEER_NOT_FOUND (string)
 
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
+
++ Response 406 (application/json)
+            
+    An amount was less than or equal to zero.
+
+    + Attributes (object)
+        + error (array)
+            + VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
+            
     + Schema
 
             {
