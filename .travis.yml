@@ -8,10 +8,9 @@ cache:
   yarn: true
 
 before_script: 
-- yarn global add aglio
 - mkdir dist && echo 'doc.teiler.io' > dist/CNAME
 
-script: aglio --theme-variables streak  -i api.apib -o dist/index.html
+script: yarn aglio --theme-variables streak  -i api.apib -o dist/index.html
 
 deploy:
   provider: pages
