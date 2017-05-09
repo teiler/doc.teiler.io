@@ -6,6 +6,8 @@ node_js:
 
 cache:
   yarn: true
+  directories:
+  - node_modules
 
 before_script: 
 - mkdir dist && echo 'doc.teiler.io' > dist/CNAME
