@@ -1,16 +1,29 @@
 FORMAT: 1A
 HOST: https://api.teiler.io/v1
 
-# tylr
+# Teiler.io
 
-tylr is a tool to split expenses in groups
+Teiler.io is a tool to split expenses in groups. It is implemented as a public REST API everyone can use. There are three parts to it:
 
-Throughout this document, you'll find error responses defined on a per-resource basis. Their description is based on the following schema:
+* The [API backend implementation](https://api.teiler.io) we developed.
+* The [API specifications](https://doc.teiler.io) you're reading.
+* One [frontend implementation](https://web.teiler.io) we developed.
 
-* Textual description
-  * Applicable operations (POST, GET, PUT, DELETE)
-  * HTTP Status Code
-  * The JSON response that is delivered, consisting of a constant error code you may check against.
+The idea is that everyone can develop their own frontend implementation. 
+
+We developed one implementation for the web platform because we think it's the most common one. But if you want a native app, then you can simply implement this API and you're good to go.
+If you follow the API specs (and our backend will tell you if you don't) then you can even leave out parts you don't want to implement - a user can simply use another implementation, like our web one.
+
+You'll often find error codes in this document that may not apply to you. This is because the API has to be strict at what data it allows because we cannot control the frontend implementations.
+You're free to implement your own checks around the scenarious we throw errors for, it's simply the last line of defense before anything goes into our database.
+
+If you ever encounter an error, then *rest* assured because we followed the RESTful standards.
+If you receive a status code HTTP 200, then everything you asked for is done and in the state you requested.
+For every other status code, we changed nothing yet and they're part of our pre-flight checks.
+
+Also, our backend server is correctly configured for CORS so you can just start whenever you want! And if something goes wrong, don't hesitate to contact us at [contact@teiler.io](mailto:contact@teiler.io).
+
+# Technical Briefing
 
 The enumeration values for ``currency`` are currently:
 * ``chf``
