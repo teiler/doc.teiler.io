@@ -10,7 +10,7 @@ cache:
 before_script: 
 - mkdir dist && echo 'doc.teiler.io' > dist/CNAME
 
-script: yarn aglio --theme-variables streak  -i api.apib -o dist/index.html
+script: $(yarn bin)/aglio --theme-variables streak  -i api.apib -o dist/index.html
 
 deploy:
   provider: pages
