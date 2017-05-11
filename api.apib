@@ -461,6 +461,27 @@ Deactivates a person. Note that there is no way to re-activate it.
                     ...
                 ]
             }
+            
++ Response 417 (application/json)
+
+    The person has unsettled debts
+
+    + Body
+
+            {
+                "error": [
+                    "PERSON_HAS_UNSETTLED_DEBTS",
+                ]
+            }
+
+    + Schema
+
+            {
+                "error": [ 
+                    "ERROR_CODE",
+                    ...
+                ]
+            }
 
 # Expense [/groups/{groupid}/expenses]
 
