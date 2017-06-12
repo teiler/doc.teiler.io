@@ -1,1 +1,1 @@
-aglio --theme-variables streak -i api.apib -o index.html
+$(yarn bin)/docprint -p api.apib -d ./dist
