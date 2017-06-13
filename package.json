@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "aglio": "^2.3.0"
+    "docprint": "^1.9.0"
   }
 }
