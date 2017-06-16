@@ -1,5 +1,8 @@
 {
+  "scripts": {
+    "build": "rm -rf ./dist && cp -r ./src ./dist && cp -r ./node_modules/redoc/dist ./dist/redoc"
+  },
   "dependencies": {
-    "docprint": "^1.9.0"
+    "redoc": "^1.16.1"
   }
 }
