@@ -580,6 +580,18 @@ paths:
               $ref: '#/definitions/SettleUp'
         '401':
           $ref: '#/responses/Unauthorized'
+  '/info/currencies':
+    get:
+      tags:
+        - info
+      summary: List supported currency values (NOT YET IMPLEMENTED)
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Currency'
 definitions:
   Group:
     type: object
@@ -710,11 +722,12 @@ definitions:
       type: string
       example: ERROR_STRING
       description: Error Code
+  Currency:
+    type: string
+    example: chf
+    description: A currency literal
 responses:
   Unauthorized:
     description: NOT_AUTHORIZED_TO_GROUP
     schema:
       $ref: '#/definitions/Error'
-externalDocs:
-  description: Find out more about Swagger
-  url: 'http://swagger.io'
