@@ -1,0 +1,718 @@
+swagger: '2.0'
+info:
+  description: |
+    Teiler.io is a tool to split expenses in groups. It is implemented as a public REST API everyone can use. There are three parts to it:
+    
+    * The [API backend implementation](https://api.teiler.io) we developed.
+    * The [API specifications](https://doc.teiler.io) you're reading.
+    * One [frontend implementation](https://web.teiler.io) we developed.
+    
+    The idea is that everyone can develop their own frontend implementation. 
+    
+    We developed one implementation for the web platform because we think it's the most common one. But if you want a native app, then you can simply implement this API and you're good to go.
+    If you follow the API specs (and our backend will tell you if you don't) then you can even leave out parts you don't want to implement - a user can simply use another implementation, like our web one.
+    
+    You'll often find error codes in this document that may not apply to you. This is because the API has to be strict at what data it allows because we cannot control the frontend implementations.
+    You're free to implement your own checks around the scenarious we throw errors for, it's simply the last line of defense before anything goes into our database.
+    
+    If you ever encounter an error, then *rest* assured because we followed the RESTful standards.
+    If you receive a status code HTTP 200, then everything you asked for is done and in the state you requested.
+    For every other status code, we changed nothing yet and they're part of our pre-flight checks.
+    
+    Also, our backend server is correctly configured for CORS so you can just start whenever you want! And if something goes wrong, don't hesitate to contact us.
+    
+    The enumeration values for ``currency`` are currently:
+    * ``chf``
+    * ``eur``
+    
+    All time values follow the ISO time format standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
+  version: 1.0.0
+  title: Teiler.io API
+  contact:
+    email: contact@teiler.io
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+host: api.teiler.io
+basePath: /v1
+tags:
+  - name: groups
+    description: |
+      A group is a collection of people and their expenses and compensations.
+  - name: people
+    description: Manage people
+  - name: expenses
+    description: |
+      An expense is something one person bought and is shared with other people.
+      The payer can decide who profits from that and can even set how much each
+      one profits.
+  - name: compensations
+    description: |
+      A compensation is a payment that is recorded in tylr. It basically follows
+      the Expense model, except there's just one profiteer.
+  - name: debts
+    description: |
+      Shows the debts to the group with the concept of a balance.
+
+      * A positive value means, the person has a credit on the group (the group owes this person)
+      * A negative value means, the person has a debt on the group (this person owes the group)
+  - name: settleup
+    description: |
+      Shows suggested compensations between group members. They're formatted as multiple compensations, so you could re-use them when the user wants to quickly settle up.
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+  groupID:
+    name: groupID
+    in: path
+    description: ID of the group
+    required: true
+    type: string
+  id:
+    name: id
+    in: path
+    description: ID
+    required: true
+    type: integer
+  limit:
+    name: limit
+    in: query
+    description: Maximum of results returned
+    required: false
+    type: integer
+    default: 20
+  active:
+    name: active
+    in: query
+    description: Only return active people
+    required: false
+    type: boolean
+    default: true
+schemes:
+  - https
+paths:
+  /groups:
+    post:
+      tags:
+        - groups
+      summary: Create a new group
+      description: ''
+      parameters:
+        - in: body
+          name: body
+          description: Post the group name.
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Group name
+      responses:
+        '200':
+          description: Group successfully created
+          schema:
+            $ref: '#/definitions/Group'
+  '/groups/{groupID}':
+    get:
+      tags:
+        - groups
+      summary: Get a group by ID
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/active'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Group'
+        '401':
+          $ref: '#/responses/Unauthorized'
+    put:
+      tags:
+        - groups
+      summary: Update a group
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - in: body
+          name: group
+          description: Group name
+          required: true
+          schema:
+            $ref: '#/definitions/Group'
+      responses:
+        '200':
+          description: Group successfully updated
+          schema:
+            $ref: '#/definitions/Group'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '416':
+          description: 'The currency does not fit to the array values:<br>CURRENCY_NOT_VALID'
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - groups
+      summary: Delete a group by ID
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/groupID'
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/responses/Unauthorized'
+  '/groups/{groupID}/people':
+    post:
+      tags:
+        - people
+      summary: Create a new person
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - in: body
+          name: person
+          description: Person
+          required: true
+          schema:
+            $ref: '#/definitions/Person'
+      responses:
+        '200':
+          description: Group successfully created
+          schema:
+            $ref: '#/definitions/Person'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '409':
+          description: >-
+            The person names clash in this
+            group:<br>PEOPLE_NAME_CONFLICT<br><br>Note, that you CAN re-use a
+            person's name if it's deactivated
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      tags:
+        - people
+      summary: Get people
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/active'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Person'
+        '401':
+          $ref: '#/responses/Unauthorized'
+  '/groups/{groupID}/people/{id}':
+    put:
+      tags:
+        - people
+      summary: Edit a person
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/id'
+        - in: body
+          name: person
+          description: Person
+          required: true
+          schema:
+            $ref: '#/definitions/Person'
+      responses:
+        '200':
+          description: Person successfully edited
+          schema:
+            $ref: '#/definitions/Person'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: 'Person ID  not found in this group:<br>PERSON_NOT_FOUND'
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: 'The person names clash in this group.:<br>PEOPLE_NAME_CONFLICT'
+          schema:
+            $ref: '#/definitions/Error'
+        '410':
+          description: 'The person is inactive:<br>PERSON_INACTIVE'
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - people
+      summary: Deactivate a person
+      description: Deactivates a person. Note that there is no way to re-activate it.
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/id'
+      responses:
+        '200':
+          description: Person successfully deactivated
+          schema:
+            $ref: '#/definitions/Person'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: 'The person ID not found in this group:<br>PERSON_NOT_FOUND'
+          schema:
+            $ref: '#/definitions/Error'
+        '417':
+          description: 'The person has unsettled debts:<br>PERSON_HAS_UNSETTLED_DEBTS'
+          schema:
+            $ref: '#/definitions/Error'
+  '/groups/{groupID}/expenses':
+    post:
+      tags:
+        - expenses
+      summary: Create a new expense
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - in: body
+          name: expense
+          description: Expense
+          required: true
+          schema:
+            $ref: '#/definitions/Expense'
+      responses:
+        '200':
+          description: Expense successfully created
+          schema:
+            $ref: '#/definitions/Expense'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: >-
+            Payer ID or Profiteer ID is not found in this
+            group:<br>PAYER_NOT_FOUND<br>PROFITEER_NOT_FOUND
+          schema:
+            $ref: '#/definitions/Error'
+        '406':
+          description: >-
+            Shares don't add up to the amount or an amount / share was less than
+            or equal to
+            zero:<br>SHARES_DONT_ADD_UP<br>VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
+          schema:
+            $ref: '#/definitions/Error'
+        '410':
+          description: >-
+            The payer or one of the profiteers is
+            inactive:<br>PAYER_INACTIVE<br>PROFITEER_INACTIVE
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      tags:
+        - expenses
+      summary: Get last expenses
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/limit'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Expense'
+        '401':
+          $ref: '#/responses/Unauthorized'
+  '/groups/{groupID}/expenses/{id}':
+    get:
+      tags:
+        - expenses
+      summary: Get an expense by ID
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/id'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Expense'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: 'Transaction ID not found in this group:<br>TRANSACTION_NOT_FOUND'
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - expenses
+      summary: Edit an expense
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/id'
+        - in: body
+          name: expense
+          description: Expense
+          required: true
+          schema:
+            $ref: '#/definitions/Expense'
+      responses:
+        '200':
+          description: Expense successfully edited
+          schema:
+            $ref: '#/definitions/Expense'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: >-
+            Transaction ID, Payer ID or Profiteer ID not found in this
+            group:<br>TRANSACTION_NOT_FOUND<br>PAYER_NOT_FOUND<br>PROFITEER_NOT_FOUND
+          schema:
+            $ref: '#/definitions/Error'
+        '406':
+          description: >-
+            Shares don't add up to the amount or an amount / share was less than
+            or equal to
+            zero:<br>SHARES_DONT_ADD_UP<br>VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - expenses
+      summary: Delete an expense
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/id'
+      responses:
+        '200':
+          description: Expense successfully deleted
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: 'Transaction ID not found in this group:<br>TRANSACTION_NOT_FOUND'
+          schema:
+            $ref: '#/definitions/Error'
+  '/groups/{groupID}/compensations':
+    post:
+      tags:
+        - compensations
+      summary: Create a new compensation
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - in: body
+          name: compensation
+          description: Compensation
+          required: true
+          schema:
+            $ref: '#/definitions/Compensation'
+      responses:
+        '200':
+          description: Compensation successfully created
+          schema:
+            $ref: '#/definitions/Compensation'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: >-
+            Payer ID or Profiteer ID not found in this
+            group:<br>PAYER_NOT_FOUND<br>PROFITEER_NOT_FOUND
+          schema:
+            $ref: '#/definitions/Error'
+        '406':
+          description: >-
+            Shares don't add up to the amount or an amount / share was less than
+            or equal to
+            zero:<br>SHARES_DONT_ADD_UP<br>VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: 'Payer and Profiteer clash:<br>PAYER_AND_ROFITEER_CONFLICT'
+          schema:
+            $ref: '#/definitions/Error'
+        '410':
+          description: >-
+            The payer or the profiteers is
+            inactive:<br>PAYER_INACTIVE<br>PROFITEER_INACTIVE
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      tags:
+        - compensations
+      summary: Get last compensations
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/limit'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Compensation'
+        '401':
+          $ref: '#/responses/Unauthorized'
+  '/groups/{groupID}/compensations/{id}':
+    get:
+      tags:
+        - compensations
+      summary: Get a compensation by ID
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/id'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Compensation'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: 'Transaction ID is not found in this group:<br>TRANSACTION_NOT_FOUND'
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - compensations
+      summary: Edit a compensation
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/id'
+        - in: body
+          name: compensation
+          description: Compensation
+          required: true
+          schema:
+            $ref: '#/definitions/Compensation'
+      responses:
+        '200':
+          description: Compensation successfully edited
+          schema:
+            $ref: '#/definitions/Compensation'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: >-
+            Payer ID or Profiteer ID not found in this
+            group:<br>PAYER_NOT_FOUND<br>PROFITEER_NOT_FOUND
+          schema:
+            $ref: '#/definitions/Error'
+        '406':
+          description: >-
+            Shares don't add up to the amount or an amount / share was less than
+            or equal to
+            zero:<br>SHARES_DONT_ADD_UP<br>VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: 'Payer and Profiteer clash:<br>PAYER_AND_ROFITEER_CONFLICT'
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - compensations
+      summary: Delete a compensation
+      description: ''
+      parameters:
+        - $ref: '#/parameters/groupID'
+        - $ref: '#/parameters/id'
+      responses:
+        '200':
+          description: Compensation successfully deleted
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          description: >-
+            Payer ID or Profiteer ID not found in this
+            group:<br>PAYER_NOT_FOUND<br>PROFITEER_NOT_FOUND
+          schema:
+            $ref: '#/definitions/Error'
+  '/groups/{groupID}/debts':
+    get:
+      tags:
+        - debts
+      summary: List debts
+      description: |
+        A positive value means, the person has a credit on the group (the group
+        owes this person). A negative value means, the person has a debt on the
+        group (this person owes the group).
+      parameters:
+        - $ref: '#/parameters/groupID'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Debt'
+        '401':
+          $ref: '#/responses/Unauthorized'
+  '/groups/{groupID}/settleup':
+    get:
+      tags:
+        - settleup
+      summary: List suggested payments
+      description: |
+        Shows suggested compensations between group members. They're formatted
+        as multiple compensations, so you could re-use them when the user wants
+        to quickly settle up.
+      parameters:
+        - $ref: '#/parameters/groupID'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SettleUp'
+        '401':
+          $ref: '#/responses/Unauthorized'
+definitions:
+  Group:
+    type: object
+    properties:
+      id:
+        type: string
+        example: pb1uhx98
+        readOnly: true
+      name:
+        type: string
+        example: Holidays
+      people:
+        type: array
+        items:
+          $ref: '#/definitions/Person'
+        readOnly: true
+      currency:
+        type: string
+        enum:
+          - chf
+          - eur
+      update-time:
+        type: string
+        format: date-time
+        readOnly: true
+      create-time:
+        type: string
+        format: date-time
+        readOnly: true
+  Person:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 5
+        readOnly: true
+      name:
+        type: string
+        example: Ben
+      active:
+        type: boolean
+        readOnly: true
+      update-time:
+        type: string
+        format: date-time
+        readOnly: true
+      create-time:
+        type: string
+        format: date-time
+        readOnly: true
+  Expense:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 5
+        readOnly: true
+      title:
+        type: string
+        example: Bananas
+      amount:
+        type: integer
+        format: int32
+        example: '500'
+      payer:
+        $ref: '#/definitions/Person'
+      profiteers:
+        type: array
+        items:
+          $ref: '#/definitions/Person'
+      update-time:
+        type: string
+        format: date-time
+        readOnly: true
+      create-time:
+        type: string
+        format: date-time
+        readOnly: true
+  Compensation:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: '42'
+        readOnly: true
+      amount:
+        type: integer
+        format: int32
+        example: '550'
+      payer:
+        $ref: '#/definitions/Person'
+      profiteer:
+        $ref: '#/definitions/Person'
+      update-time:
+        type: string
+        format: date-time
+        readOnly: true
+      create-time:
+        type: string
+        format: date-time
+        readOnly: true
+  Debt:
+    type: object
+    properties:
+      person:
+        $ref: '#/definitions/Person'
+      balance:
+        type: integer
+        format: int32
+        example: -300
+  SettleUp:
+    type: object
+    properties:
+      amount:
+        type: integer
+        format: int32
+        example: 450
+      payer:
+        $ref: '#/definitions/Person'
+      profiteer:
+        $ref: '#/definitions/Person'
+  Error:
+    type: array
+    items:
+      type: string
+      example: ERROR_STRING
+      description: Error Code
+responses:
+  Unauthorized:
+    description: NOT_AUTHORIZED_TO_GROUP
+    schema:
+      $ref: '#/definitions/Error'
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
