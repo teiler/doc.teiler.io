@@ -28,6 +28,8 @@ info:
     All time values follow the ISO time format standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
   version: 1.0.0
   title: Teiler.io API
+  x-logo:
+    url: "logo.svg"
   contact:
     email: contact@teiler.io
   license:
