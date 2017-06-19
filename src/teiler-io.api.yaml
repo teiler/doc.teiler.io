@@ -21,10 +21,6 @@ info:
     
     Also, our backend server is correctly configured for CORS so you can just start whenever you want! And if something goes wrong, don't hesitate to contact us.
     
-    The enumeration values for ``currency`` are currently:
-    * ``chf``
-    * ``eur``
-    
     All time values follow the ISO time format standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
   version: 1.0.0
   title: Teiler.io API
@@ -580,6 +576,18 @@ paths:
               $ref: '#/definitions/SettleUp'
         '401':
           $ref: '#/responses/Unauthorized'
+  '/info/currencies':
+    get:
+      tags:
+        - info
+      summary: List supported currency values
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Currency'
 definitions:
   Group:
     type: object
@@ -597,10 +605,7 @@ definitions:
           $ref: '#/definitions/Person'
         readOnly: true
       currency:
-        type: string
-        enum:
-          - chf
-          - eur
+        $ref: '#/definitions/Currency'
       update-time:
         type: string
         format: date-time
@@ -710,11 +715,12 @@ definitions:
       type: string
       example: ERROR_STRING
       description: Error Code
+  Currency:
+    type: string
+    example: chf
+    description: A currency literal
 responses:
   Unauthorized:
     description: NOT_AUTHORIZED_TO_GROUP
     schema:
       $ref: '#/definitions/Error'
-externalDocs:
-  description: Find out more about Swagger
-  url: 'http://swagger.io'
