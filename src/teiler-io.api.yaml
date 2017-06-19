@@ -21,10 +21,6 @@ info:
     
     Also, our backend server is correctly configured for CORS so you can just start whenever you want! And if something goes wrong, don't hesitate to contact us.
     
-    The enumeration values for ``currency`` are currently:
-    * ``chf``
-    * ``eur``
-    
     All time values follow the ISO time format standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
   version: 1.0.0
   title: Teiler.io API
@@ -584,7 +580,7 @@ paths:
     get:
       tags:
         - info
-      summary: List supported currency values (NOT YET IMPLEMENTED)
+      summary: List supported currency values
       responses:
         '200':
           description: OK
@@ -609,10 +605,7 @@ definitions:
           $ref: '#/definitions/Person'
         readOnly: true
       currency:
-        type: string
-        enum:
-          - chf
-          - eur
+        $ref: '#/definitions/Currency'
       update-time:
         type: string
         format: date-time
