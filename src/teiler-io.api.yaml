@@ -303,9 +303,8 @@ paths:
             $ref: '#/definitions/Error'
         '406':
           description: >-
-            Shares don't add up to the amount or an amount / share was less than
-            or equal to
-            zero:<br>SHARES_DONT_ADD_UP<br>VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
+            Shares don't add up to the amount or an amount / share was less than zero:
+            <br>SHARES_DONT_ADD_UP<br>VALUE_LESS_THAN_ZERO
           schema:
             $ref: '#/definitions/Error'
         '410':
@@ -380,9 +379,8 @@ paths:
             $ref: '#/definitions/Error'
         '406':
           description: >-
-            Shares don't add up to the amount or an amount / share was less than
-            or equal to
-            zero:<br>SHARES_DONT_ADD_UP<br>VALUE_LESS_THAN_OR_EQUAL_TO_ZERO
+            Shares don't add up to the amount or an amount / share was less than zero:
+            <br>SHARES_DONT_ADD_UP<br>VALUE_LESS_THAN_ZERO
           schema:
             $ref: '#/definitions/Error'
     delete:
